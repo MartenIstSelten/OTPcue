@@ -347,7 +347,7 @@ Encryption
     <value>Use your IMAP credentials; two-factor authentication usually requires an app password.</value>
   </data>
   <data name="ReadOnlyMailboxNotice" xml:space="preserve">
-    <value>INBOX is monitored read only. Credentials and OAuth tokens are encrypted locally with Windows DPAPI.</value>
+    <value>The selected folder is monitored read only. Credentials and OAuth tokens are encrypted locally with Windows DPAPI.</value>
   </data>
   <data name="InstallAndRestart" xml:space="preserve">
     <value>Install and restart</value>
@@ -437,7 +437,7 @@ Encryption
     <value>Enter password</value>
   </data>
   <data name="CredentialStorageNotice" xml:space="preserve">
-    <value>Passwords are encrypted locally for your Windows user. INBOX is read only. Existing emails are ignored on the first connection.</value>
+    <value>Passwords are encrypted locally for your Windows user. The selected folder is read only. Existing emails are ignored when monitoring starts and after switching folders.</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -491,7 +491,7 @@ Encryption
     <value>Test connection</value>
   </data>
   <data name="ConnectionAndSignInSuccessfulINBOXIsReadable" xml:space="preserve">
-    <value>Connection and sign-in successful. INBOX is readable.</value>
+    <value>Connection and sign-in successful. The selected folder is readable.</value>
   </data>
   <data name="TestingConnection" xml:space="preserve">
     <value>Testing connection …</value>
@@ -634,4 +634,10 @@ Encryption
   <data name="SecondsUnit" xml:space="preserve">
     <value>seconds</value>
   </data>
+  <data name="ReloadMailFolders" xml:space="preserve"><value>Load folders</value></data>
+  <data name="LoadingMailFolders" xml:space="preserve"><value>Loading folders …</value></data>
+  <data name="FolderSelectionHelp" xml:space="preserve"><value>Select the folder or Gmail label to check for new codes. Existing emails are ignored after switching.</value></data>
+  <data name="MailFoldersLoadFailed" xml:space="preserve"><value>Could not load folders. Check the connection and account sign-in, then reload the folders.</value></data>
+  <data name="MailFolderVerificationFailed" xml:space="preserve"><value>Could not open the folder. Check the connection and account sign-in or reload the folders.</value></data>
+  <data name="NoMailFolders" xml:space="preserve"><value>No available mail folders found.</value></data>
 </root>

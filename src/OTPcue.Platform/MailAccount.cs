@@ -10,8 +10,14 @@ internal sealed record MailAccount(Guid Id, string DisplayName, string Host, int
     public string OAuthClientId { get; init; } = "";
     public string OAuthClientSecret { get; init; } = "";
     public bool UsesOAuth => Provider == MailProvider.Google;
+    public string FolderId { get; init; } = "INBOX";
+    public string FolderName { get; init; } = "INBOX";
     internal void Validate()
     {
+        if (string.IsNullOrWhiteSpace(FolderId) || string.IsNullOrWhiteSpace(FolderName))
+        {
+            throw new InvalidDataException("Ungültiger Mailordner.");
+        }
         if (AccountValidation.Validate(Provider, PollingIntervalSeconds, OAuthClientId,
             Username, Host, Port, Password, StartTls) is { } error)
         {

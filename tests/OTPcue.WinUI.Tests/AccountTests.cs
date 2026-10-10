@@ -87,7 +87,9 @@ public sealed class AccountTests
             Username = "second@example.test",
             Password = "TEST-secret-456",
             StartTls = true,
-            Port = 143
+            Port = 143,
+            FolderId = "INBOX/Bestätigungen",
+            FolderName = "INBOX/Bestätigungen"
         };
         Check(repository.Load().Count == 0, "missing storage returns empty accounts");
         repository.Save(new[] { first, second });
@@ -105,7 +107,7 @@ public sealed class AccountTests
         Check(repository.Load().Single() == google, "Google desktop configuration roundtrips through encrypted account storage");
         Check(!Encoding.UTF8.GetString(File.ReadAllBytes(Path.Combine(directory, "accounts.dat"))).Contains(google.OAuthClientSecret), "Google desktop configuration is encrypted on disk");
         repository.Save(new[] { google });
-        foreach (var bad in new[] { google with { OAuthClientId = "secret" }, google with { Host = "imap.example.test" }, google with { StartTls = true }, google with { Port = 993 }, first with { Provider = (MailProvider)999 } })
+        foreach (var bad in new[] { google with { OAuthClientId = "secret" }, google with { Host = "imap.example.test" }, google with { StartTls = true }, google with { Port = 993 }, first with { Provider = (MailProvider)999 }, first with { FolderId = "" }, first with { FolderName = " " } })
         {
             var invalidProvider = false;
             try
@@ -144,6 +146,8 @@ public sealed class AccountTests
         legacyJson[0]!.AsObject().Remove("Provider");
         legacyJson[0]!.AsObject().Remove("OAuthClientId");
         legacyJson[0]!.AsObject().Remove("OAuthClientSecret");
+        legacyJson[0]!.AsObject().Remove("FolderId");
+        legacyJson[0]!.AsObject().Remove("FolderName");
         var legacyPlain = Encoding.UTF8.GetBytes(legacyJson.ToJsonString());
         File.WriteAllBytes(file, ProtectedData.Protect(legacyPlain, null, DataProtectionScope.CurrentUser));
         CryptographicOperations.ZeroMemory(legacyPlain);

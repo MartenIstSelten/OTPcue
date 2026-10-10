@@ -206,4 +206,10 @@ internal enum TextId
     StartInTrayHelp,
     CloseToTrayHelp,
     SecondsUnit,
+    ReloadMailFolders,
+    LoadingMailFolders,
+    FolderSelectionHelp,
+    MailFoldersLoadFailed,
+    MailFolderVerificationFailed,
+    NoMailFolders,
 }

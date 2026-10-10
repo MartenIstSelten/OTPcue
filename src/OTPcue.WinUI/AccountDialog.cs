@@ -11,6 +11,8 @@ internal static class AccountDialog
 {
     public static async Task<MailAccount?> ShowAsync(XamlRoot root, MailAccount? existing = null)
     {
+        var folderSelection = new AccountFolderSelection(existing);
+        var dialogClosed = false;
         var name = new TextBox { Header = Localization.Text(TextId.CustomAccountNameOptional), Text = existing?.DisplayName ?? "", PlaceholderText = Localization.Text(TextId.ForExamplePersonalOrWork) };
         var id = existing?.Id ?? Guid.NewGuid();
         var provider = new ComboBox { Header = Localization.Text(TextId.EmailProvider), HorizontalAlignment = HorizontalAlignment.Stretch };
@@ -38,6 +40,29 @@ internal static class AccountDialog
         transport.SelectedIndex = existing?.StartTls == true ? 1 : 0;
         transport.SelectionChanged += (_, _) => port.Value = transport.SelectedIndex == 1 ? 143 : 993;
         var password = new PasswordBox { Header = Localization.Text(TextId.IMAPAppPassword), PlaceholderText = existing is null ? Localization.Text(TextId.EnterPassword) : Localization.Text(TextId.LeaveEmptyToKeepTheSavedPassword) };
+        var folders = new ComboBox { Header = Localization.Text(TextId.AccountDetailsFolder), HorizontalAlignment = HorizontalAlignment.Stretch };
+        var loadFolders = new Button { Content = Localization.Text(TextId.ReloadMailFolders) };
+        void RenderFolders()
+        {
+            folders.Items.Clear();
+            foreach (var folder in folderSelection.Choices)
+            {
+                var item = new ComboBoxItem { Content = folder.Name, Tag = folder };
+                folders.Items.Add(item);
+                if (folder.Id == folderSelection.Selected.Id)
+                {
+                    folders.SelectedItem = item;
+                }
+            }
+        }
+        RenderFolders();
+        folders.SelectionChanged += (_, _) =>
+        {
+            if (folders.SelectedItem is ComboBoxItem { Tag: MailFolder folder })
+            {
+                folderSelection.Select(folder);
+            }
+        };
         var polling = new NumberBox
         {
             Header = Localization.Text(TextId.CheckEmailsEverySeconds),
@@ -52,6 +77,10 @@ internal static class AccountDialog
         AutomationProperties.SetLiveSetting(feedback, AutomationLiveSetting.Polite);
         void SetFeedback(string message, Brush color)
         {
+            if (dialogClosed)
+            {
+                return;
+            }
             feedback.Text = message;
             feedback.Foreground = color;
             feedback.Visibility = string.IsNullOrEmpty(message) ? Visibility.Collapsed : Visibility.Visible;
@@ -154,6 +183,9 @@ internal static class AccountDialog
         errors.Add(panel, googleSecret);
         errors.Add(panel, host);
         errors.Add(panel, password);
+        panel.Children.Add(folders);
+        panel.Children.Add(loadFolders);
+        panel.Children.Add(new TextBlock { Text = Localization.Text(TextId.FolderSelectionHelp), TextWrapping = TextWrapping.Wrap, FontSize = 12, Foreground = muted });
         advancedPanel.Children.Add(transport);
         errors.Add(advancedPanel, port);
         errors.Add(advancedPanel, polling);
@@ -197,6 +229,11 @@ internal static class AccountDialog
         void FormChanged()
         {
             SetFeedback("", muted);
+            var selectedProvider = provider.SelectedIndex >= 0 ? providers[provider.SelectedIndex] : (MailProvider)(-1);
+            if (folderSelection.UpdateMailbox(selectedProvider, host.Text, username.Text))
+            {
+                RenderFolders();
+            }
             UpdateSaveHint();
         }
         provider.SelectionChanged += (_, _) => FormChanged();
@@ -208,8 +245,13 @@ internal static class AccountDialog
         transport.SelectionChanged += (_, _) => FormChanged();
         port.ValueChanged += (_, _) => FormChanged();
         UpdateSaveHint();
-        Task? pendingTest = null;
-        dialog.Closed += (_, _) => verification.Cancel();
+        Task? pendingOperation = null;
+        dialog.Closed += (_, _) =>
+        {
+            dialogClosed = true;
+            folderSelection.Cancel();
+            verification.Cancel();
+        };
         void UpdateButton() => dialog.SecondaryButtonText = (provider.SelectedIndex >= 0 ? providers[provider.SelectedIndex] : (MailProvider)(-1)) switch
         {
             MailProvider.Google => Localization.Text(TextId.SignInWithGoogle),
@@ -243,17 +285,94 @@ internal static class AccountDialog
                 };
                 return Invalid(field, validationError.Message);
             }
-            return draft.ToAccount();
+            return folderSelection.Apply(draft.ToAccount());
         }
-        dialog.PrimaryButtonClick += (_, args) =>
+        void SetBusy(bool busy)
         {
-            result = Read();
-            if (result?.UsesOAuth == true && !verification.Matches(result))
+            if (!dialogClosed)
+            {
+                dialog.IsPrimaryButtonEnabled = dialog.IsSecondaryButtonEnabled = form.IsEnabled = !busy;
+            }
+        }
+        async Task<bool> RunFormOperationAsync(Func<Task> action, TextId progress, TextId error, string diagnosticOperation)
+        {
+            SetBusy(true);
+            SetFeedback(Localization.Text(progress), working);
+            try
+            {
+                await action();
+                return !dialogClosed;
+            }
+            catch (OperationCanceledException) when (dialogClosed) { return false; }
+            catch (Exception ex)
+            {
+                AppDiagnostics.ReportFailure(diagnosticOperation, ex);
+                SetFeedback(Localization.Text(error), failure);
+                return false;
+            }
+            finally
+            {
+                SetBusy(false);
+            }
+        }
+        async Task LoadFoldersAsync()
+        {
+            var account = Read();
+            if (account is null)
+            {
+                return;
+            }
+            if (account.UsesOAuth && !verification.Matches(account))
             {
                 SetFeedback(Localization.Text(TextId.ConnectionVerificationRequired), failure);
-                result = null;
+                return;
             }
-            args.Cancel = result is null;
+            await RunFormOperationAsync(async () =>
+            {
+                var loaded = await folderSelection.LoadAsync(account);
+                if (loaded)
+                {
+                    RenderFolders();
+                }
+                SetFeedback(loaded ? "" : Localization.Text(TextId.NoMailFolders), loaded ? muted : failure);
+            }, TextId.LoadingMailFolders, TextId.MailFoldersLoadFailed, "MailFolders.List");
+        }
+        loadFolders.Click += async (_, _) =>
+        {
+            pendingOperation = LoadFoldersAsync();
+            await pendingOperation;
+        };
+        async Task SaveAsync()
+        {
+            result = null;
+            var account = Read();
+            if (account is null)
+            {
+                return;
+            }
+            if (account.UsesOAuth && !verification.Matches(account))
+            {
+                SetFeedback(Localization.Text(TextId.ConnectionVerificationRequired), failure);
+                return;
+            }
+            if (!folderSelection.NeedsVerification(account)
+                || await RunFormOperationAsync(() => folderSelection.VerifyAsync(account),
+                    TextId.TestingConnection, TextId.MailFolderVerificationFailed, "MailFolders.Verify"))
+            {
+                result = account;
+            }
+        }
+        dialog.PrimaryButtonClick += async (_, args) =>
+        {
+            args.Cancel = true;
+            var deferral = args.GetDeferral();
+            try
+            {
+                pendingOperation = SaveAsync();
+                await pendingOperation;
+                args.Cancel = result is null;
+            }
+            finally { deferral.Complete(); }
         };
         async Task TestAsync()
         {
@@ -263,8 +382,7 @@ internal static class AccountDialog
                 return;
             }
 
-            dialog.IsPrimaryButtonEnabled = dialog.IsSecondaryButtonEnabled = false;
-            form.IsEnabled = false;
+            SetBusy(true);
 
             SetFeedback(Localization.Text(TextId.TestingConnection), working);
             var reportingProgress = true;
@@ -272,7 +390,7 @@ internal static class AccountDialog
             {
                 var progress = new Progress<string>(message =>
                 {
-                    if (reportingProgress)
+                    if (reportingProgress && !dialogClosed)
                     {
                         SetFeedback(message, working);
                     }
@@ -306,11 +424,12 @@ internal static class AccountDialog
             finally
             {
                 reportingProgress = false;
-                form.IsEnabled = true;
-
-                UpdateProvider(false);
-                UpdateSaveHint();
-                dialog.IsPrimaryButtonEnabled = dialog.IsSecondaryButtonEnabled = true;
+                SetBusy(false);
+                if (!dialogClosed)
+                {
+                    UpdateProvider(false);
+                    UpdateSaveHint();
+                }
             }
         }
         dialog.SecondaryButtonClick += async (_, args) =>
@@ -319,15 +438,15 @@ internal static class AccountDialog
             args.Cancel = true;
             try
             {
-                pendingTest = TestAsync();
-                await pendingTest;
+                pendingOperation = TestAsync();
+                await pendingOperation;
             }
             finally { deferral.Complete(); }
         };
         var saved = await dialog.ShowAsync() == ContentDialogResult.Primary;
-        if (pendingTest is not null)
+        if (pendingOperation is not null)
         {
-            await pendingTest;
+            await pendingOperation;
         }
 
         if (existing is null && (!saved || result?.Provider != MailProvider.Google))

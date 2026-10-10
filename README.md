@@ -9,6 +9,7 @@ Connect your inbox, receive a code, and click the suggestion to fill it in—rig
 - **Local processing:** Emails are processed on your computer, with no telemetry or email content logging.
 - **Encrypted credentials:** Passwords and OAuth tokens are protected with Windows DPAPI and stored for your Windows user account.
 - **Email connections:** Connect through IMAP using a password or app password, or use Google OAuth for Gmail. Multiple accounts are supported.
+- **Folder selection:** Choose the IMAP folder or Gmail label to monitor
 - **Click to fill:** New codes appear as suggestions next to supported input fields in browsers and Windows apps.
 - **Configurable suggestions:** Adjust the countdown, use codes once, and optionally restrict suggestions to detected verification code fields.
 - **Demo mode:** Try autofill without connecting an email account.
@@ -25,7 +26,7 @@ To try the app, start demo mode and click a text field in another app. Click the
 
 ## Notes
 
-The app processes new inbox messages without modifying them. It detects numeric codes containing 4–8 digits. Some input fields are unsupported, including codes split across multiple individual boxes.
+The app processes new messages in the selected folder without modifying them. Existing messages are ignored when monitoring starts or the folder changes. It detects numeric codes containing 4–8 digits. Some input fields are unsupported, including codes split across multiple individual boxes.
 
 Gmail and iCloud can be connected using app passwords.
 

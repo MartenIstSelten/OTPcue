@@ -31,7 +31,7 @@ internal sealed class MailPoller
         this.status = status;
         this.time = time ?? TimeProvider.System;
     }
-    internal async Task RunAsync(string host, int port, string username, string password, bool startTls, CancellationToken stop, string? accountLabel = null, int pollingIntervalSeconds = 3, Func<ImapClient, CancellationToken, Task>? authenticate = null)
+    internal async Task RunAsync(string host, int port, string username, string password, bool startTls, CancellationToken stop, string? accountLabel = null, int pollingIntervalSeconds = 3, Func<ImapClient, CancellationToken, Task>? authenticate = null, string folderId = "INBOX")
     {
         if (pollingIntervalSeconds is < 1 or > 600)
         {
@@ -56,8 +56,7 @@ internal sealed class MailPoller
                     await authenticate(client, stop);
                 }
 
-                var inbox = client.Inbox;
-                await inbox.OpenAsync(FolderAccess.ReadOnly, stop);
+                var inbox = await MailFolders.OpenImapFolderAsync(client, folderId, stop);
                 if (validity != inbox.UidValidity)
                 {
                     validity = inbox.UidValidity;

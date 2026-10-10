@@ -33,7 +33,7 @@ internal sealed class GmailPoller(OtpStore store, Action<LocalizedText> status, 
                 }
                 else
                 {
-                    cursor = await PollOnceAsync(cursor, token, account.DisplayName, stop);
+                    cursor = await PollOnceAsync(cursor, token, account.DisplayName, stop, account.FolderId);
                     if (failures > 0)
                     {
                         status(new(TextId.GoogleConnectedOnlyNewINBOXEmailsAreChecked, account.PollingIntervalSeconds));
@@ -76,14 +76,15 @@ internal sealed class GmailPoller(OtpStore store, Action<LocalizedText> status, 
         }
     }
 
-    internal async Task<string> PollOnceAsync(string cursor, string token, string accountLabel, CancellationToken stop)
+    internal async Task<string> PollOnceAsync(string cursor, string token, string accountLabel, CancellationToken stop, string folderId = "INBOX")
     {
         string? page = null;
         string? nextCursor = null;
         var seen = new HashSet<string>(StringComparer.Ordinal);
         do
         {
-            var query = "history?startHistoryId=" + Uri.EscapeDataString(cursor) + "&historyTypes=messageAdded&labelId=INBOX&maxResults=100";
+            var query = "history?startHistoryId=" + Uri.EscapeDataString(cursor)
+                + "&historyTypes=messageAdded&historyTypes=labelAdded&labelId=" + Uri.EscapeDataString(folderId) + "&maxResults=100";
             if (page is not null)
             {
                 query += "&pageToken=" + Uri.EscapeDataString(page);
@@ -95,24 +96,29 @@ internal sealed class GmailPoller(OtpStore store, Action<LocalizedText> status, 
             {
                 foreach (var entry in entries.EnumerateArray())
                 {
-                    if (!entry.TryGetProperty("messagesAdded", out var added))
+                    foreach (var changeType in new[] { "messagesAdded", "labelsAdded" })
                     {
-                        continue;
-                    }
-
-                    foreach (var item in added.EnumerateArray())
-                    {
-                        var message = item.GetProperty("message");
-                        if (!message.TryGetProperty("labelIds", out var labels) || !labels.EnumerateArray().Any(l => l.GetString() == "INBOX"))
+                        if (!entry.TryGetProperty(changeType, out var added))
                         {
                             continue;
                         }
 
-                        var id = message.GetProperty("id").GetString();
-                        if (!string.IsNullOrEmpty(id) && seen.Add(id) && !pendingIds.Contains(id))
+                        foreach (var item in added.EnumerateArray())
                         {
-                            await ProcessAsync(id, token, accountLabel, stop);
-                            pendingIds.Add(id);
+                            var message = item.GetProperty("message");
+                            // Label events list the added labels on the event itself.
+                            var labelSource = changeType == "labelsAdded" ? item : message;
+                            if (!labelSource.TryGetProperty("labelIds", out var labels) || !labels.EnumerateArray().Any(l => l.GetString() == folderId))
+                            {
+                                continue;
+                            }
+
+                            var id = message.GetProperty("id").GetString();
+                            if (!string.IsNullOrEmpty(id) && seen.Add(id) && !pendingIds.Contains(id))
+                            {
+                                await ProcessAsync(id, token, accountLabel, stop, folderId);
+                                pendingIds.Add(id);
+                            }
                         }
                     }
                 }
@@ -127,14 +133,14 @@ internal sealed class GmailPoller(OtpStore store, Action<LocalizedText> status, 
         return nextCursor ?? cursor;
     }
 
-    private async Task ProcessAsync(string id, string token, string label, CancellationToken stop)
+    private async Task ProcessAsync(string id, string token, string label, CancellationToken stop, string folderId)
     {
         try
         {
             var messagePath = "messages/" + Uri.EscapeDataString(id);
             // Do not download a large body merely to discover that it is unsuitable.
             using var metadata = await GetAsync(messagePath + "?format=metadata&fields=labelIds,sizeEstimate,internalDate", token, stop);
-            if (!IsSuitable(metadata.RootElement, out _))
+            if (!IsSuitable(metadata.RootElement, folderId, out _))
             {
                 return;
             }
@@ -142,7 +148,7 @@ internal sealed class GmailPoller(OtpStore store, Action<LocalizedText> status, 
             using var json = await GetAsync(messagePath + "?format=raw", token, stop);
             var root = json.RootElement;
             // Recheck the actual response: labels may change and sizeEstimate is an estimate.
-            if (!IsSuitable(root, out var received))
+            if (!IsSuitable(root, folderId, out var received))
             {
                 return;
             }
@@ -178,10 +184,10 @@ internal sealed class GmailPoller(OtpStore store, Action<LocalizedText> status, 
         }
     }
 
-    private bool IsSuitable(JsonElement root, out DateTimeOffset received)
+    private bool IsSuitable(JsonElement root, string folderId, out DateTimeOffset received)
     {
         received = default;
-        if (!root.GetProperty("labelIds").EnumerateArray().Any(l => l.GetString() == "INBOX")
+        if (!root.GetProperty("labelIds").EnumerateArray().Any(l => l.GetString() == folderId)
             || root.GetProperty("sizeEstimate").GetInt64() > MailContent.MaximumMessageSize)
         {
             return false;

@@ -347,7 +347,7 @@ Verschlüsselung
     <value>IMAP-Zugangsdaten verwenden; bei Zwei-Faktor-Anmeldung meist ein App-Passwort.</value>
   </data>
   <data name="ReadOnlyMailboxNotice" xml:space="preserve">
-    <value>INBOX wird nur lesend überwacht. Zugangsdaten und OAuth-Tokens werden lokal mit Windows-DPAPI verschlüsselt.</value>
+    <value>Der ausgewählte Ordner wird nur lesend überwacht. Zugangsdaten und OAuth-Tokens werden lokal mit Windows-DPAPI verschlüsselt.</value>
   </data>
   <data name="InstallAndRestart" xml:space="preserve">
     <value>Installieren und neu starten</value>
@@ -437,7 +437,7 @@ Verschlüsselung
     <value>Passwort eingeben</value>
   </data>
   <data name="CredentialStorageNotice" xml:space="preserve">
-    <value>Passwörter sind lokal für deinen Windows-Benutzer verschlüsselt. INBOX wird nur gelesen. Bestehende Mails werden beim ersten Verbindungsaufbau ignoriert.</value>
+    <value>Passwörter sind lokal für deinen Windows-Benutzer verschlüsselt. Der ausgewählte Ordner wird nur gelesen. Bestehende Mails werden beim Start der Überwachung und nach einem Ordnerwechsel ignoriert.</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
@@ -491,7 +491,7 @@ Verschlüsselung
     <value>Verbindung prüfen</value>
   </data>
   <data name="ConnectionAndSignInSuccessfulINBOXIsReadable" xml:space="preserve">
-    <value>Verbindung und Anmeldung erfolgreich. INBOX ist lesbar.</value>
+    <value>Verbindung und Anmeldung erfolgreich. Der ausgewählte Ordner ist lesbar.</value>
   </data>
   <data name="TestingConnection" xml:space="preserve">
     <value>Verbindung wird geprüft …</value>
@@ -634,4 +634,10 @@ Verschlüsselung
   <data name="SecondsUnit" xml:space="preserve">
     <value>Sekunden</value>
   </data>
+  <data name="ReloadMailFolders" xml:space="preserve"><value>Ordner laden</value></data>
+  <data name="LoadingMailFolders" xml:space="preserve"><value>Ordner werden geladen …</value></data>
+  <data name="FolderSelectionHelp" xml:space="preserve"><value>Wähle den Ordner oder das Gmail-Label, in dem nach neuen Codes gesucht werden soll. Bestehende Mails werden nach dem Wechsel ignoriert.</value></data>
+  <data name="MailFoldersLoadFailed" xml:space="preserve"><value>Ordner konnten nicht geladen werden. Prüfe die Verbindung und die Kontoanmeldung und lade die Ordner erneut.</value></data>
+  <data name="MailFolderVerificationFailed" xml:space="preserve"><value>Der Ordner konnte nicht geöffnet werden. Prüfe die Verbindung und die Kontoanmeldung oder lade die Ordner erneut.</value></data>
+  <data name="NoMailFolders" xml:space="preserve"><value>Keine verfügbaren Mailordner gefunden.</value></data>
 </root>

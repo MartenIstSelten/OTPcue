@@ -1,4 +1,3 @@
-using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Security;
 
@@ -21,7 +20,7 @@ internal static class AccountConnection
             account.StartTls ? SecureSocketOptions.StartTls : SecureSocketOptions.SslOnConnect, stop);
         await client.AuthenticateAsync(account.Username, account.Password, stop);
 
-        await client.Inbox.OpenAsync(FolderAccess.ReadOnly, stop);
+        await MailFolders.OpenImapFolderAsync(client, account.FolderId, stop);
         await client.DisconnectAsync(true, stop);
     }
 

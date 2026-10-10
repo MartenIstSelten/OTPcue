@@ -17,6 +17,66 @@ public sealed class GoogleOfflineTests
 
     private static void Check(bool condition, string label) => Assert.True(condition, label);
 
+    [Fact]
+    public void GmailFolderNamesAreDistinctFromStableIds()
+    {
+        using var json = JsonDocument.Parse("""
+            {"labels":[{"id":"Label_42","name":"Bestätigungen/Privat"},{"id":"INBOX","name":"INBOX"}]}
+            """);
+        var labels = MailFolders.GoogleLabels(json.RootElement);
+        Assert.Equal("INBOX", labels[0].Id);
+        Assert.Equal(new MailFolder("Label_42", "Bestätigungen/Privat"), labels[1]);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task SelectedLabelFiltersNewMessagesAndLabelAssignments(bool labelEvent)
+    {
+        const string selected = "Label_42";
+        var store = new OtpStore();
+        var calls = new List<string>();
+        var changes = new[]
+        {
+            new { message = new { id = "selected", labelIds = new[] { selected } }, labelIds = new[] { selected } },
+            new { message = new { id = "inbox", labelIds = new[] { "INBOX" } }, labelIds = new[] { "INBOX" } }
+        };
+        var history = JsonSerializer.Serialize(new
+        {
+            historyId = "200",
+            history = new[] { new Dictionary<string, object> { [labelEvent ? "labelsAdded" : "messagesAdded"] = changes } }
+        });
+        var poller = new GmailPoller(store, _ => { }, (path, token, stop) =>
+        {
+            calls.Add(path);
+            return Task.FromResult(JsonDocument.Parse(path.StartsWith("history?") ? history : Message("123456", label: selected)));
+        });
+        Assert.Equal("200", await poller.PollOnceAsync("100", "TEST-token", "Privat", CancellationToken.None, selected));
+        Assert.Contains("labelId=Label_42&", calls[0]);
+        Assert.Contains("historyTypes=labelAdded", calls[0]);
+        Assert.DoesNotContain(calls, path => path.Contains("messages/inbox"));
+        Assert.Equal("123456", store.Latest()!.Code);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task SelectedLabelIsRecheckedBeforeAndAfterDownloading(bool removedDuringDownload)
+    {
+        var store = new OtpStore();
+        var calls = new List<string>();
+        var history = History(["guard"]).Replace("INBOX", "Label_42");
+        var poller = new GmailPoller(store, _ => { }, (path, token, stop) =>
+        {
+            calls.Add(path);
+            var label = removedDuringDownload && path.Contains("format=metadata") ? "Label_42" : "INBOX";
+            return Task.FromResult(JsonDocument.Parse(path.StartsWith("history?") ? history : Message("123456", label: label)));
+        });
+        await poller.PollOnceAsync("100", "TEST-token", "Privat", CancellationToken.None, "Label_42");
+        Assert.Null(store.Latest());
+        Assert.Equal(removedDuringDownload, calls.Any(path => path.Contains("format=raw")));
+    }
+
     private static string Message(string code, long? received = null, long size = 100, string rawOverride = "", string label = "INBOX")
     {
         var raw = Convert.ToBase64String(Encoding.UTF8.GetBytes("From: Service <service@example.test>\r\nSubject: Verification code\r\nContent-Type: text/plain; charset=utf-8\r\n\r\nYour verification code is " + code)).TrimEnd('=').Replace('+', '-').Replace('/', '_');

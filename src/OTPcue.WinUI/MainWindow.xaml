@@ -127,7 +127,7 @@
                 <TextBlock x:Name="DetailsEncryptionHeading" Grid.Row="2" Text="Verschlüsselung" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
                 <TextBlock x:Name="DetailsEncryptionValue" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" />
                 <TextBlock x:Name="DetailsFolderHeading" Grid.Row="3" Text="Ordner" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
-                <TextBlock Grid.Row="3" Grid.Column="1" Text="INBOX" />
+                <TextBlock x:Name="DetailsFolderValue" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" />
                 <TextBlock x:Name="DetailsIntervalHeading" Grid.Row="4" Text="Prüfintervall" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
                 <TextBlock x:Name="DetailsIntervalValue" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" />
                 <TextBlock x:Name="DetailsMonitoringHeading" Grid.Row="5" Text="Überwachung" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
@@ -138,7 +138,7 @@
                 <Button x:Name="EnableButton" Content="Konto deaktivieren" HorizontalAlignment="Stretch" IsEnabled="False" Click="EnableClicked" />
                 <Button x:Name="RemoveButton" Content="Konto entfernen" HorizontalAlignment="Stretch" Foreground="#FFFFB4B4" IsEnabled="False" Click="RemoveClicked" />
               </StackPanel>
-              <TextBlock Text="Passwörter sind lokal für deinen Windows-Benutzer verschlüsselt. INBOX wird nur gelesen. Bestehende Mails werden beim ersten Verbindungsaufbau ignoriert." TextWrapping="Wrap" Foreground="#FFB3C0CA" FontSize="12" x:Name="LocalizedElement4" />
+              <TextBlock Text="Passwörter sind lokal für deinen Windows-Benutzer verschlüsselt. Der ausgewählte Ordner wird nur gelesen. Bestehende Mails werden beim Start der Überwachung und nach einem Ordnerwechsel ignoriert." TextWrapping="Wrap" Foreground="#FFB3C0CA" FontSize="12" x:Name="LocalizedElement4" />
             </StackPanel>
           </StackPanel>
         </ScrollViewer>

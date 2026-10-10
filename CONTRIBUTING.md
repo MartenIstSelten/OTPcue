@@ -46,6 +46,8 @@ Open `tests/manual/otp-field.html` in a browser to test autofill manually.
 
 `AccountValidation` is shared by account drafts and persisted accounts. Keep connection invariants there so loading or saving accounts cannot bypass form validation. `AutofillController` owns focus tracking, popup visibility, insertion state, and its resources; `MainWindow` renders the current code and coordinates application actions.
 
+`AccountFolderSelection` owns folder choices, selection, and cancellable provider operations. Credential and transport edits preserve the selection; changing the provider, server, or username invalidates the previous mailbox's choices. Canceled or failed requests must not replace the selection. Both connection verification and monitoring open the selected IMAP folder read only through `MailFolders.OpenImapFolderAsync`.
+
 Google token caching retains only DPAPI ciphertext. Each request still decrypts its own snapshot, checks the account/client binding, and lets the Google SDK handle expiry and refresh. Unchanged snapshots are not rewritten. File metadata changes invalidate cached bytes; deleting credentials also invalidates in-flight authorization so it cannot restore the deleted cache. Plaintext serialization buffers are cleared after use.
 
 For account edits, enabling/disabling, and removal, `AccountChange` treats a successful save as the commit point. A failed save leaves monitoring untouched. After commit, the old worker is awaited before the UI adopts the saved state; worker and credential-cleanup failures are diagnosed and shown as cleanup warnings. The stop callback must guarantee worker termination even when it reports an error, as `AccountMonitor.StopAsync` does.

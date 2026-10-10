@@ -225,6 +225,7 @@ public sealed partial class MainWindow
         DetailsEmailValue.Text = account.Username;
         DetailsServerValue.Text = account.UsesOAuth ? "gmail.googleapis.com" : account.Host + ":" + account.Port;
         DetailsEncryptionValue.Text = account.UsesOAuth ? "HTTPS / TLS" : account.Transport;
+        DetailsFolderValue.Text = account.FolderName;
         DetailsIntervalValue.Text = Localization.Format(TextId.AccountDetailsIntervalValue, account.PollingIntervalSeconds);
         DetailsMonitoringValue.Text = view.EnabledLabel;
         ConnectionLabel.Text = view.Status;

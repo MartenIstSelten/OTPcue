@@ -13,6 +13,6 @@ internal static class AccountPolling
 
         return new MailPoller(store, status).RunAsync(
             account.Host, account.Port, account.Username, account.Password, account.StartTls,
-            stop, account.DisplayName, account.PollingIntervalSeconds);
+            stop, account.DisplayName, account.PollingIntervalSeconds, folderId: account.FolderId);
     }
 }
