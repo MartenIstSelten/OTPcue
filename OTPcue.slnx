@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OTPcue.Core/OTPcue.Core.csproj" />
+    <Project Path="src/OTPcue.Platform/OTPcue.Platform.csproj" />
+    <Project Path="src/OTPcue.WinUI/OTPcue.WinUI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OTPcue.Core.Tests/OTPcue.Core.Tests.csproj" />
+    <Project Path="tests/OTPcue.Google.Tests/OTPcue.Google.Tests.csproj" />
+    <Project Path="tests/OTPcue.Updates.Tests/OTPcue.Updates.Tests.csproj" />
+    <Project Path="tests/OTPcue.Windows.Tests/OTPcue.Windows.Tests.csproj" />
+    <Project Path="tests/OTPcue.WinUI.Tests/OTPcue.WinUI.Tests.csproj" />
+  </Folder>
+</Solution>

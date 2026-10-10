@@ -1,0 +1,285 @@
+<Window x:Class="OTPcue.WinUI.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="OTPcue">
+  <Grid RequestedTheme="Dark" Padding="28,28,28,12">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid ColumnSpacing="20" Margin="0,0,0,22">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Text="OTPcue" FontSize="30" FontWeight="SemiBold" VerticalAlignment="Center" />
+      <Grid Grid.Column="1" ColumnSpacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Button x:Name="DemoButton" Content="Demo starten" Click="DemoClicked" Background="Transparent" BorderThickness="0" />
+        <Button x:Name="PauseButton" Grid.Column="1" Content="Autofill pausieren" Click="PauseClicked" />
+      </Grid>
+    </Grid>
+    <Border Grid.Row="1" Background="#70304550" CornerRadius="14" Padding="20" Margin="0,0,0,22">
+      <Grid ColumnSpacing="18">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Spacing="5">
+          <Grid HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="NoCodePlaceholder" Text="Noch kein Code" FontSize="24" FontWeight="SemiBold" Foreground="#FF8BE2CD" TextWrapping="Wrap" />
+            <Button x:Name="CopyCodeButton" Visibility="Collapsed" Background="Transparent" BorderThickness="0" Padding="8,0" Margin="-8,0,0,0" HorizontalAlignment="Left" Click="CopyCodeClicked" PointerEntered="CopyCodePointerEntered" PointerExited="CopyCodePointerExited" GotFocus="CopyCodeGotFocus" LostFocus="CopyCodeLostFocus">
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock x:Name="CodeLabel" FontSize="30" FontWeight="SemiBold" Foreground="#FF8BE2CD" />
+                <FontIcon x:Name="CopyCodeIcon" Glyph="&#xE8C8;" FontSize="16" Foreground="#FF8BE2CD" VerticalAlignment="Center" Opacity="0" AutomationProperties.AccessibilityView="Raw" />
+              </StackPanel>
+            </Button>
+            <TextBlock x:Name="CopyCodeFeedbackLabel" Grid.Column="1" Margin="8,0,0,0" FontSize="12" Foreground="#FF8BE2CD" VerticalAlignment="Center" AutomationProperties.AccessibilityView="Raw" />
+          </Grid>
+          <TextBlock x:Name="SourceLabel" Text="Verbinde ein Konto und fordere danach eine neue Code-Mail an." TextTrimming="CharacterEllipsis" />
+          <TextBlock x:Name="ExpiryLabel" FontSize="12" Foreground="#FFB3C0CA" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+          <Button x:Name="GenerateButton" HorizontalAlignment="Right" Content="Demo-Code erneuern" Visibility="Collapsed" Click="GenerateClicked" />
+          <StackPanel Orientation="Horizontal" Spacing="12">
+            <!-- Keep the status slot measured even when its badge is collapsed. -->
+            <Grid Width="168" MinHeight="32">
+              <Border x:Name="PausedStatus" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#14E6B96B" BorderBrush="#30E6B96B" BorderThickness="1" CornerRadius="8" Padding="5,4,10,4" ToolTipService.ToolTip="Autofill ist pausiert. E-Mail-Codes werden weiterhin empfangen; Vorschläge und automatisches Einfügen sind ausgesetzt.">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Border Width="20" Height="20" CornerRadius="5" Background="#20E6B96B" VerticalAlignment="Center" AutomationProperties.AccessibilityView="Raw">
+                    <StackPanel Orientation="Horizontal" Spacing="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                      <Rectangle Width="2" Height="8" RadiusX="1" RadiusY="1" Fill="#FFE6B96B" />
+                      <Rectangle Width="2" Height="8" RadiusX="1" RadiusY="1" Fill="#FFE6B96B" />
+                    </StackPanel>
+                  </Border>
+                  <TextBlock Text="Autofill pausiert" FontSize="12" FontWeight="Medium" Foreground="#FFF0D5A7" VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" x:Name="LocalizedElement1" />
+                </StackPanel>
+              </Border>
+            </Grid>
+            <Button x:Name="ClearButton" Content="Code verwerfen" Click="ClearClicked" IsEnabled="False" />
+          </StackPanel>
+        </StackPanel>
+      </Grid>
+    </Border>
+    <Grid x:Name="AccountsScreen" Grid.Row="2" ColumnSpacing="20">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="340" />
+      </Grid.ColumnDefinitions>
+      <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+          <TextBlock Text="E-Mail-Konten" FontSize="21" FontWeight="SemiBold" VerticalAlignment="Center" x:Name="LocalizedElement2" />
+          <Button x:Name="AddButton" Content="+ Konto hinzufügen" HorizontalAlignment="Right" Click="AddClicked" Style="{StaticResource AccentButtonStyle}" />
+        </Grid>
+        <Grid Grid.Row="1">
+          <ListView x:Name="AccountList" SelectionMode="Single" SelectionChanged="AccountSelected">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Spacing="5" Padding="5,10">
+                  <TextBlock Text="{Binding DisplayName}" FontSize="17" FontWeight="SemiBold" />
+                  <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" Foreground="#FFB3C0CA" />
+                  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" FontSize="12" Foreground="{Binding StatusForeground}" ToolTipService.ToolTip="{Binding StatusToolTip}" />
+                </StackPanel>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+          <TextBlock x:Name="EmptyAccounts" Text="Noch keine Konten. Füge dein erstes E-Mail-Konto hinzu." TextWrapping="Wrap" Foreground="#FFB3C0CA" Margin="8,22" />
+        </Grid>
+      </Grid>
+      <Border Grid.Column="1" Background="#50304550" CornerRadius="14" Padding="20">
+        <ScrollViewer>
+          <StackPanel Spacing="14">
+            <TextBlock Text="Kontodetails" FontSize="21" FontWeight="SemiBold" x:Name="LocalizedElement3" />
+            <TextBlock x:Name="DetailsLabel" Text="Wähle ein Konto aus." TextWrapping="Wrap" Foreground="#FFB3C0CA" />
+            <StackPanel x:Name="SelectedAccountDetails" Spacing="18" Visibility="Collapsed">
+              <StackPanel Spacing="6">
+                <TextBlock x:Name="DetailsAccountName" FontSize="17" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="ConnectionLabel" TextWrapping="Wrap" FontSize="12" Foreground="#FF8BE2CD" />
+              </StackPanel>
+              <Border Height="1" Background="#20304550" />
+              <Grid ColumnSpacing="12" RowSpacing="12">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" MaxWidth="110" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="DetailsEmailHeading" Text="E-Mail" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsEmailValue" Grid.Column="1" TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                <TextBlock x:Name="DetailsServerHeading" Grid.Row="1" Text="Server" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsServerValue" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                <TextBlock x:Name="DetailsEncryptionHeading" Grid.Row="2" Text="Verschlüsselung" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsEncryptionValue" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsFolderHeading" Grid.Row="3" Text="Ordner" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="INBOX" />
+                <TextBlock x:Name="DetailsIntervalHeading" Grid.Row="4" Text="Prüfintervall" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsIntervalValue" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsMonitoringHeading" Grid.Row="5" Text="Überwachung" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+                <TextBlock x:Name="DetailsMonitoringValue" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" />
+              </Grid>
+              <StackPanel Spacing="8">
+                <Button x:Name="EditButton" Content="Konto bearbeiten" HorizontalAlignment="Stretch" IsEnabled="False" Click="EditClicked" />
+                <Button x:Name="EnableButton" Content="Konto deaktivieren" HorizontalAlignment="Stretch" IsEnabled="False" Click="EnableClicked" />
+                <Button x:Name="RemoveButton" Content="Konto entfernen" HorizontalAlignment="Stretch" Foreground="#FFFFB4B4" IsEnabled="False" Click="RemoveClicked" />
+              </StackPanel>
+              <TextBlock Text="Passwörter sind lokal für deinen Windows-Benutzer verschlüsselt. INBOX wird nur gelesen. Bestehende Mails werden beim ersten Verbindungsaufbau ignoriert." TextWrapping="Wrap" Foreground="#FFB3C0CA" FontSize="12" x:Name="LocalizedElement4" />
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+    <ScrollViewer x:Name="SettingsScreen" Grid.Row="2" Visibility="Collapsed">
+      <StackPanel Spacing="12" MaxWidth="680" HorizontalAlignment="Left">
+        <TextBlock Text="Einstellungen" FontSize="24" FontWeight="SemiBold" x:Name="LocalizedElement5" />
+        <Border Background="#30304550" CornerRadius="10" Padding="20">
+          <StackPanel Spacing="12">
+            <TextBlock x:Name="GeneralSettingsHeading" Text="Allgemein" FontSize="21" FontWeight="SemiBold" />
+            <ComboBox x:Name="LanguageInput" Header="Sprache" HorizontalAlignment="Stretch" />
+          </StackPanel>
+        </Border>
+        <Border Background="#30304550" CornerRadius="10" Padding="20">
+          <StackPanel Spacing="12">
+            <TextBlock x:Name="CodeSettingsHeading" Text="Codes &amp; Vorschläge" FontSize="21" FontWeight="SemiBold" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="CountdownTitle" Text="Codes anzeigen für" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock Text="So lange bleiben erkannte Codes in OTPcue verfügbar. Gilt für neue Codes; die tatsächliche Gültigkeit bestimmt der jeweilige Dienst." TextWrapping="Wrap" FontSize="12" Foreground="#FFB3C0CA" x:Name="LocalizedElement6" />
+              </StackPanel>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <NumberBox x:Name="CountdownInput" Width="160" Minimum="15" Maximum="600" SmallChange="15" LargeChange="60" SpinButtonPlacementMode="Inline" AutomationProperties.LabeledBy="{Binding ElementName=CountdownTitle}" />
+                <TextBlock x:Name="CountdownUnit" Text="Sekunden" VerticalAlignment="Center" Foreground="#FFB3C0CA" />
+              </StackPanel>
+            </Grid>
+            <Border Height="1" Background="#20304550" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="RemoveAfterInsertTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="RemoveAfterInsertHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="RemoveAfterInsertInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=RemoveAfterInsertTitle}" />
+            </Grid>
+            <Border Height="1" Background="#20304550" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="AutoCopyCodesTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="AutoCopyCodesHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="AutoCopyCodesInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=AutoCopyCodesTitle}" />
+            </Grid>
+            <Border Height="1" Background="#20304550" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="OnlyCodeFieldsTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="LocalizedElement7" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="OnlyCodeFieldsInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=OnlyCodeFieldsTitle}" />
+            </Grid>
+          </StackPanel>
+        </Border>
+        <Border Background="#30304550" CornerRadius="10" Padding="20">
+          <StackPanel Spacing="12">
+            <TextBlock x:Name="WindowSettingsHeading" Text="Start &amp; Fenster" FontSize="21" FontWeight="SemiBold" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="StartWithWindowsTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="StartWithWindowsHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="StartWithWindowsInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=StartWithWindowsTitle}" />
+            </Grid>
+            <Border Height="1" Background="#20304550" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="StartInTrayTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="StartInTrayHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="StartInTrayInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=StartInTrayTitle}" />
+            </Grid>
+            <Border Height="1" Background="#20304550" />
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="CloseToTrayTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="CloseToTrayHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="CloseToTrayInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=CloseToTrayTitle}" />
+            </Grid>
+          </StackPanel>
+        </Border>
+        <Border Background="#30304550" CornerRadius="10" Padding="20">
+          <StackPanel Spacing="8">
+            <TextBlock x:Name="UpdatesHeading" Text="Info &amp; Updates" FontSize="21" FontWeight="SemiBold" />
+            <Grid ColumnSpacing="12">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Spacing="3" VerticalAlignment="Center">
+                <TextBlock x:Name="VersionLabel" FontSize="12" Foreground="#FFB3C0CA" />
+                <TextBlock x:Name="UpdateStatusLabel" TextWrapping="Wrap" FontSize="12" AutomationProperties.LiveSetting="Polite" />
+                <ProgressBar x:Name="UpdateProgress" Minimum="0" Maximum="100" Visibility="Collapsed" Margin="0,4,0,0" />
+              </StackPanel>
+              <Button x:Name="CheckUpdateButton" Grid.Column="1" Content="Nach Updates suchen" Click="CheckUpdateClicked" VerticalAlignment="Center" />
+              <Button x:Name="InstallUpdateButton" Grid.Column="2" Content="Jetzt aktualisieren" Click="InstallUpdateClicked" Visibility="Collapsed" VerticalAlignment="Center" />
+            </Grid>
+          </StackPanel>
+        </Border>
+        <TextBlock x:Name="SettingsStatus" TextWrapping="Wrap" Foreground="#FF8BE2CD" />
+      </StackPanel>
+    </ScrollViewer>
+    <StackPanel Grid.Row="3" Spacing="8" Margin="0,8,0,0">
+      <Border x:Name="MainUpdateNotice" Visibility="Collapsed" Background="#30304550" CornerRadius="10" Padding="12,8">
+        <Grid ColumnSpacing="12">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <TextBlock x:Name="MainUpdateLabel" TextWrapping="Wrap" FontSize="12" VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" />
+          <Button x:Name="MainInstallUpdateButton" Grid.Column="1" Content="Jetzt aktualisieren" Click="InstallUpdateClicked" VerticalAlignment="Center" />
+        </Grid>
+      </Border>
+      <Grid ColumnSpacing="14" MinHeight="32">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="StatusLabel" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FFB3C0CA" />
+        <StackPanel x:Name="SettingsFooterButtons" Orientation="Horizontal" Spacing="10" Visibility="Collapsed">
+          <Button Content="Speichern" Click="SaveSettingsClicked" x:Name="LocalizedElement8" />
+          <Button Content="Standardwerte" Click="ResetSettingsClicked" x:Name="LocalizedElement9" />
+        </StackPanel>
+        <Border x:Name="OfflineStatus" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#14F08080" BorderBrush="#30F08080" BorderThickness="1" CornerRadius="8" Padding="10,5">
+          <StackPanel Orientation="Horizontal" Spacing="7">
+            <FontIcon Glyph="&#xEB55;" FontSize="14" Foreground="#FFF08080" VerticalAlignment="Center" AutomationProperties.AccessibilityView="Raw" />
+            <TextBlock x:Name="OfflineLabel" Text="Du bist offline" FontSize="12" Foreground="#FFFFB4B4" VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" />
+          </StackPanel>
+        </Border>
+        <Button x:Name="SettingsButton" Grid.Column="2" Content="Einstellungen" Click="SettingsClicked" />
+        <Button x:Name="BackButton" Grid.Column="2" Content="Zurück" Click="BackClicked" Visibility="Collapsed" />
+      </Grid>
+    </StackPanel>
+  </Grid>
+</Window>

@@ -1,0 +1,637 @@
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="General" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="CodesSuggestions" xml:space="preserve">
+    <value>Codes &amp; Vorschläge</value>
+  </data>
+  <data name="StartupWindow" xml:space="preserve">
+    <value>Start &amp; Fenster</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="GoogleSignInRequired" xml:space="preserve">
+    <value>Google-Anmeldung erforderlich: Konto bearbeiten und bei Google anmelden.</value>
+  </data>
+  <data name="GmailHistoryExpiredEstablishingANewBaseline" xml:space="preserve">
+    <value>Gmail-Verlauf abgelaufen; neue Empfangsbasis wird eingerichtet.</value>
+  </data>
+  <data name="SystemLanguage" xml:space="preserve">
+    <value>Systemsprache</value>
+  </data>
+  <data name="AccessibleCountdown" xml:space="preserve">
+    <value>Code noch {0} Sekunden gültig</value>
+  </data>
+  <data name="PollingSecondsSuffix" xml:space="preserve">
+    <value> Sekunden
+
+</value>
+  </data>
+  <data name="WillBeRemovedAlongWithItsSavedCredentials" xml:space="preserve">
+    <value> wird einschließlich der gespeicherten Zugangsdaten entfernt.</value>
+  </data>
+  <data name="CheckCredentialsOAuthConfigurationAndTheSelectedAccount" xml:space="preserve">
+    <value>). Zugangsdaten, OAuth-Konfiguration und gewähltes Konto prüfen.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>
+
+Benutzername
+</value>
+  </data>
+  <data name="MonitoredFolderINBOXPollingInterval" xml:space="preserve">
+    <value>
+
+Überwachter Ordner
+INBOX
+
+Polling-Intervall
+</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>
+
+Verschlüsselung
+</value>
+  </data>
+  <data name="AddAccount" xml:space="preserve">
+    <value>+ Konto hinzufügen</value>
+  </data>
+  <data name="ToSecondsDefaultSeconds" xml:space="preserve">
+    <value>1 bis 600 Sekunden. Standard: 3 Sekunden.</value>
+  </data>
+  <data name="CountdownHelp" xml:space="preserve">
+    <value>So lange bleiben erkannte Codes in OTPcue verfügbar. Gilt für neue Codes; die tatsächliche Gültigkeit bestimmt der jeweilige Dienst.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Aktiv</value>
+  </data>
+  <data name="CurrentCodeDiscarded" xml:space="preserve">
+    <value>Aktueller Code verworfen.</value>
+  </data>
+  <data name="OtherProviderIMAP" xml:space="preserve">
+    <value>Anderer Anbieter (IMAP)</value>
+  </data>
+  <data name="ResumeAutofill" xml:space="preserve">
+    <value>Autofill fortsetzen</value>
+  </data>
+  <data name="PausedHelp" xml:space="preserve">
+    <value>Autofill ist pausiert. E-Mail-Codes werden weiterhin empfangen; Vorschläge und automatisches Einfügen sind ausgesetzt.</value>
+  </data>
+  <data name="PauseAutofill" xml:space="preserve">
+    <value>Autofill pausieren</value>
+  </data>
+  <data name="PauseResumeAutofill" xml:space="preserve">
+    <value>Autofill pausieren / fortsetzen</value>
+  </data>
+  <data name="AutofillPaused" xml:space="preserve">
+    <value>Autofill pausiert</value>
+  </data>
+  <data name="StartupIsEnabled" xml:space="preserve">
+    <value>Autostart ist aktiviert</value>
+  </data>
+  <data name="StartupIsDisabled" xml:space="preserve">
+    <value>Autostart ist deaktiviert</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="SignInWithGoogle" xml:space="preserve">
+    <value>Bei Google anmelden</value>
+  </data>
+  <data name="MinimizeToTheNotificationAreaWhenClosing" xml:space="preserve">
+    <value>Beim Schließen in den Infobereich minimieren</value>
+  </data>
+  <data name="StartInTheNotificationAreaAtWindowsSignIn" xml:space="preserve">
+    <value>Beim Windows-Autostart im Infobereich öffnen</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Bitte dein IMAP- oder App-Passwort eingeben.</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Bitte deinen Benutzernamen oder deine E-Mail-Adresse eingeben.</value>
+  </data>
+  <data name="CompleteGoogleSignIn" xml:space="preserve">
+    <value>Bitte die Google-Anmeldung im Browser abschließen …</value>
+  </data>
+  <data name="InvalidPort" xml:space="preserve">
+    <value>Bitte eine ganze Portnummer zwischen 1 und 65535 eingeben.</value>
+  </data>
+  <data name="InvalidPollingInterval" xml:space="preserve">
+    <value>Bitte eine ganze Zahl zwischen 1 und 600 Sekunden eingeben.</value>
+  </data>
+  <data name="InvalidCountdown" xml:space="preserve">
+    <value>Bitte eine ganze Zahl zwischen 15 und 600 eingeben.</value>
+  </data>
+  <data name="InvalidGoogleClientId" xml:space="preserve">
+    <value>Bitte eine gültige Google-Desktop-Client-ID eintragen.</value>
+  </data>
+  <data name="InvalidImapHost" xml:space="preserve">
+    <value>Bitte einen gültigen IMAP-Server eingeben, zum Beispiel imap.mailbox.org.</value>
+  </data>
+  <data name="PleaseSelectAnEmailProvider" xml:space="preserve">
+    <value>Bitte einen Mailanbieter auswählen.</value>
+  </data>
+  <data name="GoogleSignInNeeded" xml:space="preserve">
+    <value>Bitte mit der eingegebenen Google-Mailadresse anmelden.</value>
+  </data>
+  <data name="ReleaseModifierKeys" xml:space="preserve">
+    <value>Bitte Strg, Alt, Shift und Windows-Tasten loslassen.</value>
+  </data>
+  <data name="ConnectionVerificationRequired" xml:space="preserve">
+    <value>Bitte zuerst beim gewählten Anbieter anmelden und die Verbindung erfolgreich prüfen.</value>
+  </data>
+  <data name="BrowserCallbackReceivedConfirmingGoogleAccess" xml:space="preserve">
+    <value>Browser-Rückruf erhalten. Google-Zugang wird bestätigt …</value>
+  </data>
+  <data name="InsertCode" xml:space="preserve">
+    <value>Code einfügen</value>
+  </data>
+  <data name="TheCodeHasExpired" xml:space="preserve">
+    <value>Code ist abgelaufen.</value>
+  </data>
+  <data name="CodeSentViaKeyboardInput" xml:space="preserve">
+    <value>Code per Tastatureingabe gesendet.</value>
+  </data>
+  <data name="CodeInsertedViaUIAutomation" xml:space="preserve">
+    <value>Code über UI Automation eingefügt.</value>
+  </data>
+  <data name="DiscardCode" xml:space="preserve">
+    <value>Code verwerfen</value>
+  </data>
+  <data name="TheCodeIsDiscardedCompletely" xml:space="preserve">
+    <value>Code wird vollständig verworfen</value>
+  </data>
+  <data name="CountdownInSeconds" xml:space="preserve">
+    <value>Codes anzeigen für</value>
+  </data>
+  <data name="GoogleAccountMismatch" xml:space="preserve">
+    <value>Das gewählte Google-Konto stimmt nicht mit der eingegebenen E-Mail überein. Bitte die primäre Gmail-Adresse eingeben und erneut anmelden.</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="DemoActiveClickAnEmptyTextFieldInAnotherApp" xml:space="preserve">
+    <value>Demo aktiv: 482913. Klicke in ein leeres Textfeld einer anderen App.</value>
+  </data>
+  <data name="StopDemo" xml:space="preserve">
+    <value>Demo beenden</value>
+  </data>
+  <data name="StartDemo" xml:space="preserve">
+    <value>Demo starten</value>
+  </data>
+  <data name="DemoCode" xml:space="preserve">
+    <value>Demo-Code</value>
+  </data>
+  <data name="RefreshDemoCode" xml:space="preserve">
+    <value>Demo-Code erneuern</value>
+  </data>
+  <data name="RefreshTheDemoCodeToContinueTesting" xml:space="preserve">
+    <value>Demo-Code erneuern, um weiter zu testen.</value>
+  </data>
+  <data name="GoogleConsentRequired" xml:space="preserve">
+    <value>Der Gmail-Zugriff wurde nicht erlaubt. Bitte erneut anmelden und den Lesezugriff bestätigen.</value>
+  </data>
+  <data name="SignInWasCanceledOrTimedOutPleaseTryAgain" xml:space="preserve">
+    <value>Die Anmeldung wurde abgebrochen oder hat zu lange gedauert. Bitte erneut versuchen.</value>
+  </data>
+  <data name="TheAppIsUpToDate" xml:space="preserve">
+    <value>Die App ist aktuell.</value>
+  </data>
+  <data name="DiscardThisCode" xml:space="preserve">
+    <value>Diesen Code verwerfen</value>
+  </data>
+  <data name="ThisAccountAlreadyExists" xml:space="preserve">
+    <value>Dieses Konto ist bereits vorhanden.</value>
+  </data>
+  <data name="EmailAccounts" xml:space="preserve">
+    <value>E-Mail-Konten</value>
+  </data>
+  <data name="AddEmailAccount" xml:space="preserve">
+    <value>E-Mail-Konto hinzufügen</value>
+  </data>
+  <data name="CheckEmailsEverySeconds" xml:space="preserve">
+    <value>E-Mails prüfen alle … Sekunden</value>
+  </data>
+  <data name="CustomGoogleAppConfigurationForForks" xml:space="preserve">
+    <value>Eigene Google-App-Konfiguration (für Forks)</value>
+  </data>
+  <data name="CustomAccountNameOptional" xml:space="preserve">
+    <value>Eigene Kontobezeichnung (optional)</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>Einfügen  →</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="SettingsSaved" xml:space="preserve">
+    <value>Einstellungen gespeichert. Der Countdown gilt für neue Codes.</value>
+  </data>
+  <data name="SettingsReadFailed" xml:space="preserve">
+    <value>Einstellungen konnten nicht gelesen werden. Standardwerte sind aktiv; Speichern ersetzt die Einstellungsdatei.</value>
+  </data>
+  <data name="SettingsSaveFailed" xml:space="preserve">
+    <value>Einstellungen konnten nicht gespeichert werden. Bitte erneut versuchen.</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="ClickingTheFieldAgainOffersTheCodeAgain" xml:space="preserve">
+    <value>Erneuter Feldklick bietet den Code wieder an</value>
+  </data>
+  <data name="AdvancedSettings" xml:space="preserve">
+    <value>Erweiterte Einstellungen</value>
+  </data>
+  <data name="TheFieldIsNotEmptyPleaseClearItFirst" xml:space="preserve">
+    <value>Feld ist nicht leer; bitte zuerst leeren.</value>
+  </data>
+  <data name="CodeFieldLabelRequired" xml:space="preserve">
+    <value>Feldbeschriftung muss auf einen Code hinweisen</value>
+  </data>
+  <data name="TheWindowStaysHiddenAtWindowsSignIn" xml:space="preserve">
+    <value>Beim Windows-Autostart bleibt das Fenster verborgen</value>
+  </data>
+  <data name="ClosingTheWindowExitsTheApp" xml:space="preserve">
+    <value>Fenster schließen beendet die App</value>
+  </data>
+  <data name="ClosingTheWindowHidesTheApp" xml:space="preserve">
+    <value>Fenster schließen blendet die App aus</value>
+  </data>
+  <data name="FocusChangedPleaseClickTheSuggestionAgain" xml:space="preserve">
+    <value>Fokus geändert; bitte erneut auf den Vorschlag klicken.</value>
+  </data>
+  <data name="GmailAppPassword" xml:space="preserve">
+    <value>Gmail (App-Passwort)</value>
+  </data>
+  <data name="GmailOAuthSignInWithGoogle" xml:space="preserve">
+    <value>Gmail OAuth (Mit Google anmelden)</value>
+  </data>
+  <data name="GoogleConnectionHelp" xml:space="preserve">
+    <value>Gmail-Adresse eingeben und sicher im Browser bei Google anmelden.</value>
+  </data>
+  <data name="GmailAppPasswordHelp" xml:space="preserve">
+    <value>Google-App-Passwort verwenden (benötigt Zwei-Faktor-Authentifizierung). Nicht für alle Konten verfügbar.</value>
+  </data>
+  <data name="GoogleClientSecretRequired" xml:space="preserve">
+    <value>Google benötigt das client_secret dieser Desktop-App. Die gemeinsame Google-App-Konfiguration ist unvollständig. Für eine eigene Registrierung unter ‚Eigene Google-App-Konfiguration‘ das client_secret aus der heruntergeladenen Client-JSON eintragen.</value>
+  </data>
+  <data name="GoogleDesktopClientSecret" xml:space="preserve">
+    <value>Google Desktop client_secret</value>
+  </data>
+  <data name="GoogleAuthorizationExpired" xml:space="preserve">
+    <value>Google hat den Anmeldecode abgelehnt oder die Anmeldung ist abgelaufen. Bitte erneut anmelden.</value>
+  </data>
+  <data name="GoogleClientRejected" xml:space="preserve">
+    <value>Google hat die App-Konfiguration abgelehnt. Client-ID und zugehöriges client_secret prüfen.</value>
+  </data>
+  <data name="GoogleSignInFailed" xml:space="preserve">
+    <value>Google konnte die Anmeldung nicht abschließen. Bitte die Google-App-Konfiguration prüfen und erneut anmelden.</value>
+  </data>
+  <data name="GoogleOAuthClientID" xml:space="preserve">
+    <value>Google OAuth Client-ID</value>
+  </data>
+  <data name="GoogleConnectedOnlyNewINBOXEmailsAreChecked" xml:space="preserve">
+    <value>Verbunden · Neue E-Mails werden alle {0} Sekunden geprüft.</value>
+  </data>
+  <data name="GoogleSignInSuccessfulGmailIsReadableSaveNow" xml:space="preserve">
+    <value>Google-Anmeldung erfolgreich. Gmail ist lesbar. Jetzt speichern.</value>
+  </data>
+  <data name="GoogleAccessDenied" xml:space="preserve">
+    <value>Google-Anmeldung erhalten, aber Gmail-Zugriff verweigert. Gmail API im Google-Projekt aktivieren und den Lesezugriff erlauben.</value>
+  </data>
+  <data name="GoogleSignInReceivedCheckingGmailAccess" xml:space="preserve">
+    <value>Google-Anmeldung erhalten. Gmail-Zugriff wird geprüft …</value>
+  </data>
+  <data name="GoogleEmailContentCouldNotBeProcessedMessageSkipped" xml:space="preserve">
+    <value>Google-Mail-Inhalt konnte nicht verarbeitet werden; Nachricht übersprungen.</value>
+  </data>
+  <data name="TheMainWindowIsShownAtWindowsSignIn" xml:space="preserve">
+    <value>Beim Windows-Autostart wird das Hauptfenster angezeigt</value>
+  </data>
+  <data name="ICloudAppPassword" xml:space="preserve">
+    <value>iCloud (App-Passwort)</value>
+  </data>
+  <data name="ICloudAppPasswordHelp" xml:space="preserve">
+    <value>iCloud-Mailadresse und ein App-Passwort aus deinem Apple Account verwenden.</value>
+  </data>
+  <data name="PausedInDemoMode" xml:space="preserve">
+    <value>Im Demo-Modus pausiert</value>
+  </data>
+  <data name="IMAPAppPassword" xml:space="preserve">
+    <value>IMAP-/App-Passwort</value>
+  </data>
+  <data name="IMAPUsernameEmail" xml:space="preserve">
+    <value>IMAP-Benutzername / E-Mail</value>
+  </data>
+  <data name="IMAPServer" xml:space="preserve">
+    <value>IMAP-Server</value>
+  </data>
+  <data name="ImapConnectionHelp" xml:space="preserve">
+    <value>IMAP-Zugangsdaten verwenden; bei Zwei-Faktor-Anmeldung meist ein App-Passwort.</value>
+  </data>
+  <data name="ReadOnlyMailboxNotice" xml:space="preserve">
+    <value>INBOX wird nur lesend überwacht. Zugangsdaten und OAuth-Tokens werden lokal mit Windows-DPAPI verschlüsselt.</value>
+  </data>
+  <data name="InstallAndRestart" xml:space="preserve">
+    <value>Installieren und neu starten</value>
+  </data>
+  <data name="AboutUpdates" xml:space="preserve">
+    <value>Info &amp; Updates</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Jetzt aktualisieren</value>
+  </data>
+  <data name="EnableAccount" xml:space="preserve">
+    <value>Konto aktivieren</value>
+  </data>
+  <data name="AccountUpdated" xml:space="preserve">
+    <value>Konto aktualisiert.</value>
+  </data>
+  <data name="EditAccount" xml:space="preserve">
+    <value>Konto bearbeiten</value>
+  </data>
+  <data name="DisableAccount" xml:space="preserve">
+    <value>Konto deaktivieren</value>
+  </data>
+  <data name="RemoveAccount" xml:space="preserve">
+    <value>Konto entfernen</value>
+  </data>
+  <data name="RemoveAccountConfirmation" xml:space="preserve">
+    <value>Konto entfernen?</value>
+  </data>
+  <data name="AccountRemoved" xml:space="preserve">
+    <value>Konto entfernt.</value>
+  </data>
+  <data name="AccountAdded" xml:space="preserve">
+    <value>Konto hinzugefügt. Nach erfolgreicher Verbindung eine neue Code-Mail anfordern.</value>
+  </data>
+  <data name="AccountDetails" xml:space="preserve">
+    <value>Kontodetails</value>
+  </data>
+  <data name="LeaveEmptyToKeepTheSavedPassword" xml:space="preserve">
+    <value>Leer lassen, um das gespeicherte Passwort zu behalten</value>
+  </data>
+  <data name="EmailProvider" xml:space="preserve">
+    <value>Mailanbieter</value>
+  </data>
+  <data name="CodeFieldDetectionHelp" xml:space="preserve">
+    <value>Manche Apps stellen keine passende Feldbeschriftung bereit. Dort kann diese Einschränkung den Vorschlag ausblenden.</value>
+  </data>
+  <data name="StartWithWindows" xml:space="preserve">
+    <value>Mit Windows starten</value>
+  </data>
+  <data name="RemoveAfterInsertingOnce" xml:space="preserve">
+    <value>Nach einmaligem Einfügen entfernen</value>
+  </data>
+  <data name="CheckForUpdates" xml:space="preserve">
+    <value>Nach Updates suchen</value>
+  </data>
+  <data name="NewCodeEmailsAppearHereAutomatically" xml:space="preserve">
+    <value>Neue OTPs erscheinen hier automatisch.</value>
+  </data>
+  <data name="NewGoogleEmailCodeDetected" xml:space="preserve">
+    <value>Neuer Google-Mail-Code erkannt.</value>
+  </data>
+  <data name="NewEmailCodeDetected" xml:space="preserve">
+    <value>Neuer Mail-Code erkannt.</value>
+  </data>
+  <data name="RestartForTheUpdateFailedPleaseTryAgain" xml:space="preserve">
+    <value>Neustart für das Update fehlgeschlagen. Bitte erneut versuchen.</value>
+  </data>
+  <data name="NoCodeYet" xml:space="preserve">
+    <value>Noch kein Code</value>
+  </data>
+  <data name="NoAccountsYetAddYourFirstEmailAccount" xml:space="preserve">
+    <value>Noch keine Konten. Füge dein erstes E-Mail-Konto hinzu.</value>
+  </data>
+  <data name="AccountDisplayNameHelp" xml:space="preserve">
+    <value>Optionaler Anzeigename. Ohne Angabe wird die E-Mail-Adresse angezeigt.</value>
+  </data>
+  <data name="OAuthSignInRequired" xml:space="preserve">
+    <value>OAuth-Anmeldung erforderlich.</value>
+  </data>
+  <data name="PublicClientIDOfTheAppRegistration" xml:space="preserve">
+    <value>Öffentliche Client-ID der App-Registrierung</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Passwort eingeben</value>
+  </data>
+  <data name="CredentialStorageNotice" xml:space="preserve">
+    <value>Passwörter sind lokal für deinen Windows-Benutzer verschlüsselt. INBOX wird nur gelesen. Bestehende Mails werden beim ersten Verbindungsaufbau ignoriert.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="SettingsRollbackFailed" xml:space="preserve">
+    <value>Speichern und Wiederherstellen des Windows-Autostarts fehlgeschlagen. Bitte Autostart-Einstellung prüfen.</value>
+  </data>
+  <data name="SSLTLSUsuallyPort" xml:space="preserve">
+    <value>SSL/TLS (üblicherweise Port 993)</value>
+  </data>
+  <data name="Defaults" xml:space="preserve">
+    <value>Standardwerte</value>
+  </data>
+  <data name="DefaultsSelectedSaveToApply" xml:space="preserve">
+    <value>Standardwerte ausgewählt. Zum Übernehmen speichern.</value>
+  </data>
+  <data name="STARTTLSUsuallyPort" xml:space="preserve">
+    <value>STARTTLS (üblicherweise Port 143)</value>
+  </data>
+  <data name="STARTTLSRequired" xml:space="preserve">
+    <value>STARTTLS (verpflichtend)</value>
+  </data>
+  <data name="KeyboardInputBlockedOrIncompleteCheckTheField" xml:space="preserve">
+    <value>Tastatureingabe blockiert oder unvollständig; Feld prüfen.</value>
+  </data>
+  <data name="UpdateReadyTheAppWillRestartDuringInstallation" xml:space="preserve">
+    <value>Update bereit. Die App wird beim Installieren neu gestartet.</value>
+  </data>
+  <data name="UpdateCouldNotBeDownloadedPleaseTryAgain" xml:space="preserve">
+    <value>Update konnte nicht geladen werden. Bitte erneut versuchen.</value>
+  </data>
+  <data name="DownloadingUpdate" xml:space="preserve">
+    <value>Update wird heruntergeladen …</value>
+  </data>
+  <data name="CouldNotCheckForUpdatesPleaseTryAgainLater" xml:space="preserve">
+    <value>Updateprüfung nicht möglich. Bitte später erneut versuchen.</value>
+  </data>
+  <data name="UpdatesAreAvailableAfterInstallingThroughSetup" xml:space="preserve">
+    <value>Updates sind nach Installation über das Setup verfügbar.</value>
+  </data>
+  <data name="CheckingForUpdates" xml:space="preserve">
+    <value>Updates werden gesucht …</value>
+  </data>
+  <data name="ConnectAnAccountThenRequestANewCodeEmail" xml:space="preserve">
+    <value>Verbinde ein Konto und fordere danach eine neue Code-Mail an.</value>
+  </data>
+  <data name="ConnectionFailed" xml:space="preserve">
+    <value>Verbindung fehlgeschlagen (</value>
+  </data>
+  <data name="TestConnection" xml:space="preserve">
+    <value>Verbindung prüfen</value>
+  </data>
+  <data name="ConnectionAndSignInSuccessfulINBOXIsReadable" xml:space="preserve">
+    <value>Verbindung und Anmeldung erfolgreich. INBOX ist lesbar.</value>
+  </data>
+  <data name="TestingConnection" xml:space="preserve">
+    <value>Verbindung wird geprüft …</value>
+  </data>
+  <data name="StartingConnection" xml:space="preserve">
+    <value>Verbindung wird hergestellt…</value>
+  </data>
+  <data name="EncryptionLabel" xml:space="preserve">
+    <value>Verschlüsselung</value>
+  </data>
+  <data name="SuggestInAllEditableTextFields" xml:space="preserve">
+    <value>Vorschläge an allen beschreibbaren Textfeldern</value>
+  </data>
+  <data name="OnlyCodeFields" xml:space="preserve">
+    <value>Vorschläge nur an erkannten Code-Feldern</value>
+  </data>
+  <data name="SelectAnAccount" xml:space="preserve">
+    <value>Wähle ein Konto aus.</value>
+  </data>
+  <data name="StartupSyncFailed" xml:space="preserve">
+    <value>Windows-Autostart konnte nicht abgeglichen werden. Bitte Einstellung prüfen.</value>
+  </data>
+  <data name="ForExamplePersonalOrWork" xml:space="preserve">
+    <value>Zum Beispiel Privat oder Arbeit</value>
+  </data>
+  <data name="BackToAccounts" xml:space="preserve">
+    <value>Zurück zu Konten</value>
+  </data>
+  <data name="MailMonitoringFailed" xml:space="preserve">
+    <value>Mail-Überwachung beendet ({0}). Konto prüfen und erneut aktivieren.</value>
+  </data>
+  <data name="GoogleMonitoringFailed" xml:space="preserve">
+    <value>Google-Überwachung beendet ({0}). Konto prüfen und erneut aktivieren.</value>
+  </data>
+  <data name="EmailConnectionFailedRetrying" xml:space="preserve">
+    <value>Verbindung fehlgeschlagen · Erneuter Versuch in {1} s.</value>
+  </data>
+  <data name="GoogleConnectionFailedRetrying" xml:space="preserve">
+    <value>Verbindung fehlgeschlagen · Erneuter Versuch in {1} s.</value>
+  </data>
+  <data name="MailMessageSkipped" xml:space="preserve">
+    <value>Mail-Inhalt konnte nicht verarbeitet werden ({0}); Nachricht übersprungen.</value>
+  </data>
+  <data name="MailConnected" xml:space="preserve">
+    <value>Verbunden · Neue E-Mails werden alle {0} Sekunden geprüft.</value>
+  </data>
+  <data name="CountdownRemaining" xml:space="preserve">
+    <value>Noch {0} Sekunden gültig</value>
+  </data>
+  <data name="CouldNotAnimateTheSettingsPage" xml:space="preserve">
+    <value>Einstellungsseite konnte nicht animiert werden.</value>
+  </data>
+  <data name="AccountStorageUnavailable" xml:space="preserve">
+    <value>Kontodatei konnte nicht entschlüsselt oder gelesen werden ({0}). Sie wird nicht überschrieben.</value>
+  </data>
+  <data name="AccountChangeFailed" xml:space="preserve">
+    <value>Änderung fehlgeschlagen ({0}). Bitte erneut versuchen.</value>
+  </data>
+  <data name="FocusTrackingFailed" xml:space="preserve">
+    <value>Focus Tracking beendet: {0}</value>
+  </data>
+  <data name="InsertionUnconfirmed" xml:space="preserve">
+    <value>Einfügen nicht bestätigt: {0}. Feld prüfen.</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Update verfügbar · Version {0}</value>
+  </data>
+  <data name="AccountChangeCompletedWithWarnings" xml:space="preserve">
+    <value>Kontoänderung gespeichert. Bei der Bereinigung sind Fehler aufgetreten.</value>
+  </data>
+  <data name="YouAreOffline" xml:space="preserve">
+    <value>Du bist offline</value>
+  </data>
+  <data name="OfflineHelp" xml:space="preserve">
+    <value>Neue E-Mail-Codes können gerade nicht abgerufen werden. Sobald du wieder online bist, verbindet sich OTPcue automatisch.</value>
+  </data>
+  <data name="AccountDetailsEmail" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="AccountDetailsServer" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="AccountDetailsFolder" xml:space="preserve">
+    <value>Ordner</value>
+  </data>
+  <data name="AccountDetailsInterval" xml:space="preserve">
+    <value>Prüfintervall</value>
+  </data>
+  <data name="AccountDetailsMonitoring" xml:space="preserve">
+    <value>Überwachung</value>
+  </data>
+  <data name="AccountDetailsIntervalValue" xml:space="preserve">
+    <value>{0} s</value>
+  </data>
+  <data name="GoogleSignInBeforeSaving" xml:space="preserve">
+    <value>Vor dem Speichern bitte „Bei Google anmelden“ wählen und die Anmeldung abschließen.</value>
+  </data>
+  <data name="CopyCode" xml:space="preserve">
+    <value>Code kopieren</value>
+  </data>
+  <data name="CodeCopied" xml:space="preserve">
+    <value>Kopiert</value>
+  </data>
+  <data name="CopyCodeFailed" xml:space="preserve">
+    <value>Code konnte nicht kopiert werden. Bitte erneut versuchen.</value>
+  </data>
+  <data name="AddAnAccountToStart" xml:space="preserve">
+    <value>Füge ein Konto hinzu</value>
+  </data>
+  <data name="AddAccountEmptyCodeHelp" xml:space="preserve">
+    <value>Über „Konto hinzufügen“ verbindest du dein E-Mail-Konto.</value>
+  </data>
+  <data name="AutoCopyCodes" xml:space="preserve">
+    <value>Neue Codes automatisch kopieren</value>
+  </data>
+  <data name="AutoCopyCodesOn" xml:space="preserve">
+    <value>Neue Codes werden automatisch kopiert</value>
+  </data>
+  <data name="AutoCopyCodesOff" xml:space="preserve">
+    <value>Codes werden nur per Klick kopiert</value>
+  </data>
+  <data name="AutoCopyCodesHelp" xml:space="preserve">
+    <value>Neue Codes mit Strg+V einfügen, auch bei pausiertem Autofill. Ersetzt den Inhalt der Zwischenablage.</value>
+  </data>
+  <data name="RemoveAfterInsertHelp" xml:space="preserve">
+    <value>Verwirft den Code nach dem Einfügen durch OTPcue. Ausgeschaltet bleibt er bei erneutem Feldklick verfügbar.</value>
+  </data>
+  <data name="OnlyCodeFieldsSettingsHelp" xml:space="preserve">
+    <value>Zeigt Vorschläge nur bei passenden Feldbeschriftungen. In manchen Apps werden Felder dadurch nicht erkannt.</value>
+  </data>
+  <data name="StartWithWindowsHelp" xml:space="preserve">
+    <value>Startet OTPcue automatisch, wenn du dich bei Windows anmeldest.</value>
+  </data>
+  <data name="StartInTrayHelp" xml:space="preserve">
+    <value>Lässt das Fenster beim Windows-Autostart verborgen. Über das Symbol im Infobereich kannst du es öffnen.</value>
+  </data>
+  <data name="CloseToTrayHelp" xml:space="preserve">
+    <value>Beim Schließen läuft OTPcue im Hintergrund weiter. Ausgeschaltet wird die App beendet.</value>
+  </data>
+  <data name="SecondsUnit" xml:space="preserve">
+    <value>Sekunden</value>
+  </data>
+</root>

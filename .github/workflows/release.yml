@@ -1,0 +1,77 @@
+name: Release Windows app
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Stable version, for example 0.1.0'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-windows
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Validate version
+        id: release
+        shell: pwsh
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          $version = if ($env:REQUESTED_VERSION) { $env:REQUESTED_VERSION } else { $env:RELEASE_TAG -replace '^v', '' }
+          if ($version -notmatch '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') { throw 'Use a stable version such as v0.1.0.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+      - name: Verify code and offline behavior
+        shell: pwsh
+        run: ./scripts/Verify-Code.ps1
+      - name: Download previous release and create installer
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          dotnet tool restore
+          if ($LASTEXITCODE -ne 0) { throw 'Tool restore failed.' }
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN" }
+          $releases = Invoke-RestMethod "https://api.github.com/repos/$env:REPOSITORY/releases" -Headers $headers
+          $previous = $releases | Where-Object {
+            !$_.draft -and !$_.prerelease -and
+            ($_.assets.name -contains 'releases.win-x64.json') -and
+            ($_.assets.name -like 'OTPcue-*-win-x64-full.nupkg')
+          } | Select-Object -First 1
+          $previousDirectory = $null
+          if ($previous) {
+            $previousDirectory = 'artifacts/previous-release'
+            dotnet tool run vpk -- download github --repoUrl "https://github.com/$env:REPOSITORY" --token $env:GH_TOKEN --channel win-x64 --outputDir $previousDirectory
+            if ($LASTEXITCODE -ne 0) { throw 'Previous release download failed.' }
+          }
+          ./scripts/Build-Release.ps1 -Version $env:RELEASE_VERSION -UpdateRepositoryUrl "https://github.com/$env:REPOSITORY" -PreviousReleaseDirectory $previousDirectory
+      - name: Publish GitHub release
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_COMMIT: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          dotnet tool run vpk -- upload github --repoUrl "https://github.com/$env:REPOSITORY" --token $env:GH_TOKEN --channel win-x64 --outputDir "artifacts/releases/$env:RELEASE_VERSION/packages" --publish --releaseName "OTPcue $env:RELEASE_VERSION" --tag "v$env:RELEASE_VERSION" --targetCommitish $env:RELEASE_COMMIT
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed.' }
