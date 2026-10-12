@@ -112,8 +112,14 @@ public sealed class MsaaFocusTests
     public class AccessibleStub : DispatchProxy
     {
         internal object? Focus { get; set; } = 0;
-        internal int FocusReads { get; private set; }
-        internal int LastChildId { get; private set; }
+        internal int FocusReads
+        {
+            get; private set;
+        }
+        internal int LastChildId
+        {
+            get; private set;
+        }
         internal int State { get; set; } = 0x100004;
         internal int Width { get; set; } = 284;
         internal int Height { get; set; } = 44;

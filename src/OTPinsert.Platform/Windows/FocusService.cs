@@ -66,7 +66,10 @@ internal sealed class FocusService : IDisposable
         {
             return target;
         }
-        try { return MsaaField.ReadTarget(); }
+        try
+        {
+            return MsaaField.ReadTarget();
+        }
         catch (Exception ex)
         {
             AppDiagnostics.ReportFailure("FocusTracking.ReadMsaaTarget", ex);

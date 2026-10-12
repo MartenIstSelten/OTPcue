@@ -130,7 +130,10 @@ internal static class MsaaNative
         try
         {
             var rightPointer = Marshal.GetIUnknownForObject(right);
-            try { return leftPointer == rightPointer; }
+            try
+            {
+                return leftPointer == rightPointer;
+            }
             finally { Marshal.Release(rightPointer); }
         }
         finally { Marshal.Release(leftPointer); }

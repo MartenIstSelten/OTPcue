@@ -6,7 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accessibility" />
     <EmbeddedResource Include="Resources/NewCode.wav" />
     <ProjectReference Include="../OTPinsert.Core/OTPinsert.Core.csproj" />
     <PackageReference Include="Google.Apis.Auth" Version="1.77.0" />
