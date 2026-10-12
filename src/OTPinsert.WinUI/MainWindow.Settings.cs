@@ -18,6 +18,7 @@ public sealed partial class MainWindow
         RemoveAfterInsertInput.IsOn = settings.RemoveAfterInsert;
         OnlyCodeFieldsInput.IsOn = settings.OnlyCodeFields;
         AutoCopyCodesInput.IsOn = settings.AutoCopyCodes;
+        PlaySoundOnNewCodeInput.IsOn = settings.PlaySoundOnNewCode;
         StartWithWindowsInput.IsOn = settings.StartWithWindows;
         StartInTrayInput.IsOn = settings.StartInTray;
         CloseToTrayInput.IsOn = settings.CloseToTray;
@@ -150,7 +151,8 @@ public sealed partial class MainWindow
                 _ => "system"
             })
         {
-            AutoCopyCodes = AutoCopyCodesInput.IsOn
+            AutoCopyCodes = AutoCopyCodesInput.IsOn,
+            PlaySoundOnNewCode = PlaySoundOnNewCodeInput.IsOn
         };
         try
         {

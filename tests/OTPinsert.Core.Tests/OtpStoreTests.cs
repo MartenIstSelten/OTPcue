@@ -4,6 +4,28 @@ using Xunit;
 public sealed class OtpStoreTests
 {
     [Fact]
+    public void OnlyNewCodesNotifyIncludingRapidArrivals()
+    {
+        var store = new OtpStore();
+        var notifications = 0;
+        store.CodeAdded += () => notifications++;
+        store.Add("123456", "Inbox", DateTimeOffset.UtcNow);
+        store.Add("123456", "inbox", DateTimeOffset.UtcNow);
+        var original = Assert.IsType<Otp>(store.Latest());
+        store.Remove(original.Id);
+        store.Add("123456", "Inbox", DateTimeOffset.UtcNow);
+        store.RetryLatest();
+        store.Latest();
+        Assert.Equal(1, notifications);
+
+        store.Add("654321", "Inbox", DateTimeOffset.UtcNow);
+        store.Add("987654", "Inbox", DateTimeOffset.UtcNow);
+        Assert.Equal(3, notifications);
+        store.Clear();
+        Assert.Equal(3, notifications);
+    }
+
+    [Fact]
     public void DuplicateDeliveryKeepsOriginalIdentityAndExpiry()
     {
         var clock = new FakeClock();

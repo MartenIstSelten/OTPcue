@@ -19,6 +19,7 @@ public sealed partial class MainWindow : Window
     private readonly AccountRepository _repository = new();
     private readonly SettingsRepository _settingsRepository = new();
     private readonly SettingsService _settingsService;
+    private readonly CodeNotificationSound _codeNotificationSound = new();
     private AppSettings _settings = new();
     private readonly bool _firstRun;
     private readonly ObservableCollection<AccountView> _accounts = new();
@@ -76,6 +77,7 @@ public sealed partial class MainWindow : Window
         Localization.Configure(_settings.Language);
         _store.Countdown = TimeSpan.FromSeconds(_settings.CountdownSeconds);
         PopulateSettings(_settings);
+        _store.CodeAdded += OnCodeAdded;
         try
         {
             foreach (var account in _repository.Load())
@@ -154,6 +156,19 @@ public sealed partial class MainWindow : Window
     }
 
     private void OnUi(Action action) => DispatcherQueue.TryEnqueue(() => { if (!_closed) { action(); } });
+    private void OnCodeAdded()
+    {
+        if (_settings.PlaySoundOnNewCode)
+        {
+            OnUi(() =>
+            {
+                if (!_exiting)
+                {
+                    _codeNotificationSound.Play();
+                }
+            });
+        }
+    }
     private void BeginExit() => _ = ExitAsync();
     internal bool StartInTray => !_firstRun && _settings.StartInTray;
     internal void HideToTray() => _appWindow.Hide();
@@ -259,9 +274,10 @@ public sealed partial class MainWindow : Window
         _exiting = true;
         _closed = true;
         var failures = await Shutdown.RunAsync(
-            [() => NetworkInformation.NetworkStatusChanged -= NetworkStatusChanged, _copyFeedbackTimer.Stop, _store.Clear, _updateStop.Cancel, _autofill.Stop],
+            [() => NetworkInformation.NetworkStatusChanged -= NetworkStatusChanged,
+                () => _store.CodeAdded -= OnCodeAdded, _copyFeedbackTimer.Stop, _store.Clear, _updateStop.Cancel, _autofill.Stop],
             _monitor.StopAllAsync,
-            [_tray.Dispose, _trayIcon.Dispose, _autofill.ClosePopup, Close, Application.Current.Exit]);
+            [_codeNotificationSound.Dispose, _tray.Dispose, _trayIcon.Dispose, _autofill.ClosePopup, Close, Application.Current.Exit]);
         foreach (var failure in failures)
         {
             System.Diagnostics.Trace.WriteLine($"Shutdown cleanup failed ({failure.GetType().Name}).");

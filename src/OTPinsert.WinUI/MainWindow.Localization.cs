@@ -70,6 +70,8 @@ public sealed partial class MainWindow
             TextId.RemoveAfterInsertingOnce, TextId.RemoveAfterInsertHelp);
         SetSettingText(AutoCopyCodesInput, AutoCopyCodesTitle, AutoCopyCodesHelp,
             TextId.AutoCopyCodes, TextId.AutoCopyCodesHelp);
+        SetSettingText(PlaySoundOnNewCodeInput, PlaySoundOnNewCodeTitle, PlaySoundOnNewCodeHelp,
+            TextId.PlaySoundOnNewCode, TextId.PlaySoundOnNewCodeHelp);
         SetSettingText(OnlyCodeFieldsInput, OnlyCodeFieldsTitle, LocalizedElement7,
             TextId.OnlyCodeFields, TextId.OnlyCodeFieldsSettingsHelp);
         SetSettingText(StartWithWindowsInput, StartWithWindowsTitle, StartWithWindowsHelp,

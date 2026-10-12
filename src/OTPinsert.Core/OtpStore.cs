@@ -12,6 +12,8 @@ public sealed class OtpStore
 
     public OtpStore(TimeProvider? time = null) => this.time = time ?? TimeProvider.System;
 
+    public event Action? CodeAdded;
+
     public TimeSpan Countdown
     {
         get
@@ -50,6 +52,8 @@ public sealed class OtpStore
             current = new(Guid.NewGuid(), code, source, receivedAt, time.GetUtcNow() + lifetime);
             consumed = false;
         }
+        // Notify outside the lock so subscribers cannot block access to the store.
+        CodeAdded?.Invoke();
     }
 
     public Otp? Latest()

@@ -212,4 +212,6 @@ internal enum TextId
     MailFoldersLoadFailed,
     MailFolderVerificationFailed,
     NoMailFolders,
+    PlaySoundOnNewCode,
+    PlaySoundOnNewCodeHelp,
 }

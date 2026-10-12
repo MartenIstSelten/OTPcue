@@ -640,4 +640,6 @@ Encryption
   <data name="MailFoldersLoadFailed" xml:space="preserve"><value>Could not load folders. Check the connection and account sign-in, then reload the folders.</value></data>
   <data name="MailFolderVerificationFailed" xml:space="preserve"><value>Could not open the folder. Check the connection and account sign-in or reload the folders.</value></data>
   <data name="NoMailFolders" xml:space="preserve"><value>No available mail folders found.</value></data>
+  <data name="PlaySoundOnNewCode" xml:space="preserve"><value>Sound for new OTP codes</value></data>
+  <data name="PlaySoundOnNewCodeHelp" xml:space="preserve"><value>Plays a short chime whenever a new OTP code is detected, including in the background.</value></data>
 </root>
