@@ -111,7 +111,7 @@ internal static class Program
             focus.Status += message => Console.WriteLine(message);
             SetForegroundWindow(hwnd);
             first.SetFocus();
-            await WaitUntil(() => Volatile.Read(ref target) is { } t && Automation.Compare(t.Element, first));
+            await WaitUntil(() => Volatile.Read(ref target) is { Element: { } element } && Automation.Compare(element, first));
             var selected = Volatile.Read(ref target)!;
             Check(selected.Bounds.Width > 0, "Unlabelled text input has global focus and bounds");
             var otp = store.Latest()!;
@@ -157,7 +157,7 @@ internal static class Program
             Check(!await changed.Task.WaitAsync(TimeSpan.FromSeconds(8)), "Stale target rejected");
             Check(((ValuePattern)second.GetCurrentPattern(ValuePattern.Pattern)).Current.Value == "", "Other field untouched");
             fallback.SetFocus();
-            await WaitUntil(() => Volatile.Read(ref target) is { } t && Automation.Compare(t.Element, fallback));
+            await WaitUntil(() => Volatile.Read(ref target) is { Element: { } element } && Automation.Compare(element, fallback));
             Check(!fallback.TryGetCurrentPattern(ValuePattern.Pattern, out _), "Fallback fixture has no ValuePattern");
             var typed = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             focus.Fill(Volatile.Read(ref target)!, store.Latest()!, ok => typed.TrySetResult(ok));

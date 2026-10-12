@@ -56,6 +56,8 @@ For account edits, enabling/disabling, and removal, `AccountChange` treats a suc
 
 Platform types use the `OTPinsert.Platform` namespace, including Windows integration. Keep private fields in lower camel case in Core and Platform and use the existing underscore prefix in window classes.
 
+`FocusService` tries UI Automation first and uses `MsaaField.ReadTarget` only when UIA supplies no eligible input. `MsaaNative` isolates Windows/COM interop and the fixed IAccessible2 ABI; `MsaaField` owns focus detection, field metadata, and hit testing. `FocusTarget` belongs to exactly one provider. MSAA identity uses the IAccessible2 window handle and node ID when available, with COM identity as the fallback. Keep provider calls on the focus worker, bound all tree walks, and revalidate field identity and foreground before insertion. Protected, read-only, disabled, invisible, and offscreen MSAA fields are excluded.
+
 Use stable `TextId` values and the German/English `.resx` resources for UI text. Use `LocalizedText` for retained status messages so language changes render the original arguments without translating account data. Keep complete sentences with format placeholders in the resources.
 
 Google, update, and mail processing scenarios are separate xUnit cases, so they can be selected with `dotnet test OTPinsert.slnx -c Release --filter FullyQualifiedName~MailProcessingTests` (replace the class name as needed). The small CLI runners reuse these same cases for manual runs.
@@ -67,6 +69,8 @@ Run all offline tests directly with `dotnet test OTPinsert.slnx -c Release`. Des
 Unexpected failures in focus tracking, click callbacks, account changes, connection verification, mail monitoring, updates, and settings emit opt-in events from the `OTPinsert-Diagnostics` EventSource. Attach an EventSource listener or tracing tool and enable warning events to inspect them. The app creates no diagnostic file and sends no telemetry; these events have no output unless a listener enables the source.
 
 Each failure contains only a fixed operation name, the exception type name, and the numeric `HResult`. Never add exception messages, stack traces, inner exceptions, account identifiers, field text, mail contents, OTPs, passwords, or tokens to these events. Provider exception details can contain sensitive data. The diagnostics test checks the emitted payload against an exception containing synthetic secrets.
+
+MSAA regression cases live in `MsaaFocusTests` and run through the normal test project.
 
 ## Your own Google OAuth client
 

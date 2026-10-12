@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Automation;
 using OTPinsert.Core;
 
 namespace OTPinsert.Platform;
-
-internal sealed record FocusTarget(AutomationElement Element, Rect Bounds, IntPtr Foreground, string Label);
 
 // All provider calls and subscription changes run on this dedicated MTA thread.
 internal sealed class FocusService : IDisposable
@@ -63,6 +60,20 @@ internal sealed class FocusService : IDisposable
         }
     }
     private FocusTarget? ReadTarget()
+    {
+        var target = ReadAutomationTarget();
+        if (target is not null)
+        {
+            return target;
+        }
+        try { return MsaaField.ReadTarget(); }
+        catch (Exception ex)
+        {
+            AppDiagnostics.ReportFailure("FocusTracking.ReadMsaaTarget", ex);
+            return null;
+        }
+    }
+    private FocusTarget? ReadAutomationTarget()
     {
         try
         {
@@ -132,12 +143,13 @@ internal sealed class FocusService : IDisposable
                     Status?.Invoke(new(TextId.TheCodeHasExpired));
                     return;
                 }
-                if (actual is null || actual.Foreground != expected.Foreground || !Automation.Compare(actual.Element, expected.Element))
+                if (actual is null || !actual.SameField(expected))
                 {
                     Status?.Invoke(new(TextId.FocusChangedPleaseClickTheSuggestionAgain));
                     return;
                 }
-                if (actual.Element.TryGetCurrentPattern(ValuePattern.Pattern, out var obj) && obj is ValuePattern value && !value.Current.IsReadOnly)
+                if (actual.Element is { } element && element.TryGetCurrentPattern(ValuePattern.Pattern, out var obj)
+                    && obj is ValuePattern value && !value.Current.IsReadOnly)
                 {
                     // SetValue replaces the field. Do not silently overwrite existing user text.
                     if (!string.IsNullOrEmpty(value.Current.Value))
@@ -157,7 +169,9 @@ internal sealed class FocusService : IDisposable
                         return;
                     }
                     // Last possible foreground/focus check before sending one Unicode input batch.
-                    if (Native.GetForegroundWindow() != expected.Foreground || !expected.Element.Current.HasKeyboardFocus)
+                    var finalTarget = ReadTarget();
+                    if (!store.Contains(otp.Id) || Native.GetForegroundWindow() != expected.Foreground
+                        || finalTarget is null || !finalTarget.SameField(expected))
                     {
                         return;
                     }
@@ -201,6 +215,14 @@ internal sealed class FocusService : IDisposable
             var field = ReadTarget();
             if (field is null || !field.Bounds.Contains(position))
             {
+                return;
+            }
+            if (field.Msaa is not null)
+            {
+                if (field.Msaa.ContainsHit(position))
+                {
+                    FieldClicked?.Invoke(field);
+                }
                 return;
             }
             // Especially for large documents: an overlay can lie inside the field's rectangle.
