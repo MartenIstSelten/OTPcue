@@ -1,6 +1,6 @@
-# OTPcue - Autofill OTP codes on Windows
+# OTPinsert - Autofill OTP codes on Windows
 
-macOS autofills your verification codes from Mail. Windows leaves you copying and pasting. **OTPcue brings that convenience to Windows.**
+macOS autofills your verification codes from Mail. Windows leaves you copying and pasting. **OTPinsert brings that convenience to Windows.**
 
 Connect your inbox, receive a code, and click the suggestion to fill it in—right in your app or browser. Codes are processed locally, with no browser extension required.
 
@@ -18,8 +18,8 @@ Connect your inbox, receive a code, and click the suggestion to fill it in—rig
 
 For Windows 10 and 11 (x64).
 
-1. Download `OTPcue-win-x64.exe` from [Releases](https://github.com/MartenIstSelten/OTPcue/releases) once a release is available.
-2. Run the installer and start OTPcue. Required runtimes are included.
+1. Download `OTPinsert-win-x64.exe` from [Releases](https://github.com/MartenIstSelten/OTPinsert/releases) once a release is available.
+2. Run the installer and start OTPinsert. Required runtimes are included.
 3. Add an account, verify the connection, and save it. Request a new verification email, then click the suggestion next to the input field.
 
 To try the app, start demo mode and click a text field in another app. Click the suggestion to insert the demo code.
@@ -30,7 +30,7 @@ The app processes new messages in the selected folder without modifying them. Ex
 
 Gmail and iCloud can be connected using app passwords.
 
-Google OAuth is currently in testing mode; Google verification is pending. Sign-in is available only to explicitly approved Google test accounts. In testing mode, authorization expires after seven days, requiring another Google sign-in in OTPcue. Alternatively, connect Gmail with an app password if your Google account supports it.
+Google OAuth is currently in testing mode; Google verification is pending. Sign-in is available only to explicitly approved Google test accounts. In testing mode, authorization expires after seven days, requiring another Google sign-in in OTPinsert. Alternatively, connect Gmail with an app password if your Google account supports it.
 
 ## Development and contributions
 

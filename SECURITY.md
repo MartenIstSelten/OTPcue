@@ -2,7 +2,7 @@
 
 Please do not publish vulnerability details, real emails, OTPs, passwords, or OAuth tokens in public issues, pull requests, or comments.
 
-Use [GitHub Private Vulnerability Reporting](https://github.com/MartenIstSelten/OTPcue/security/advisories/new) for confidential reports when “Report a vulnerability” is available in the Security section. If this reporting channel has not been enabled yet, open an issue requesting a private contact channel, without technical details or private data. Share details only through the private channel provided by the maintainer.
+Use [GitHub Private Vulnerability Reporting](https://github.com/MartenIstSelten/OTPinsert/security/advisories/new) for confidential reports when “Report a vulnerability” is available in the Security section. If this reporting channel has not been enabled yet, open an issue requesting a private contact channel, without technical details or private data. Share details only through the private channel provided by the maintainer.
 
 A private report should include the affected version or commit, prerequisites, reproduction steps using synthetic data, and the expected impact.
 

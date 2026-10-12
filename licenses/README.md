@@ -1,6 +1,6 @@
 # Release license sources
 
-The release build copies OTPcue's MIT license to `LICENSE.txt` and combines
+The release build copies OTPinsert's MIT license to `LICENSE.txt` and combines
 the full license and NOTICE texts from restored NuGet packages into
 `THIRD-PARTY-NOTICES.md`. It includes package versions, authors and copyright
 metadata. The Velopack package is checked before release to ensure both files

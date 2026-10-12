@@ -1,6 +1,6 @@
 param(
     [ValidatePattern('^https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/?$')]
-    [string]$RepositoryUrl = 'https://github.com/MartenIstSelten/OTPcue',
+    [string]$RepositoryUrl = 'https://github.com/MartenIstSelten/OTPinsert',
     [switch]$Remove
 )
 
@@ -11,11 +11,11 @@ $sha = [System.Security.Cryptography.SHA256]::Create()
 try { $key = $sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($normalized)) }
 finally { $sha.Dispose() }
 $name = ([BitConverter]::ToString($key)).Replace('-', '') + '.update-token.dat'
-$directory = Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'OTPcue/update-auth'
+$directory = Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'OTPinsert/update-auth'
 $path = Join-Path $directory $name
 if ($Remove) {
     if (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path }
-    Write-Host 'Local update token removed. Restart OTPcue.'
+    Write-Host 'Local update token removed. Restart OTPinsert.'
     return
 }
 
@@ -31,7 +31,7 @@ try {
     $encrypted = [Security.Cryptography.ProtectedData]::Protect($plain, $key, [Security.Cryptography.DataProtectionScope]::CurrentUser)
     [IO.Directory]::CreateDirectory($directory) | Out-Null
     [IO.File]::WriteAllBytes($path, $encrypted)
-    Write-Host 'Token saved outside the repository, encrypted for this Windows user. Restart OTPcue.'
+    Write-Host 'Token saved outside the repository, encrypted for this Windows user. Restart OTPinsert.'
 }
 finally {
     if ($plain) { [Array]::Clear($plain, 0, $plain.Length) }

@@ -16,13 +16,13 @@ try {
 
     # SDK artifact paths keep each project's output isolated from the running app.
     $verificationOutput = Join-Path $repositoryRoot 'artifacts/verification'
-    Invoke-DotNet -Arguments @('restore', 'OTPcue.slnx', '--artifacts-path', $verificationOutput)
-    Invoke-DotNet -Arguments @('build', 'OTPcue.slnx', '-c', 'Release', '--no-restore', '--artifacts-path', $verificationOutput, '-warnaserror')
-    Invoke-DotNet -Arguments @('test', 'OTPcue.slnx', '-c', 'Release', '--no-build', '--no-restore',
+    Invoke-DotNet -Arguments @('restore', 'OTPinsert.slnx', '--artifacts-path', $verificationOutput)
+    Invoke-DotNet -Arguments @('build', 'OTPinsert.slnx', '-c', 'Release', '--no-restore', '--artifacts-path', $verificationOutput, '-warnaserror')
+    Invoke-DotNet -Arguments @('test', 'OTPinsert.slnx', '-c', 'Release', '--no-build', '--no-restore',
         '--artifacts-path', $verificationOutput, '--logger', 'trx', '--results-directory', (Join-Path $verificationOutput 'test-results'))
-    Invoke-DotNet -Arguments @('format', 'whitespace', 'OTPcue.slnx', '--no-restore', '--verify-no-changes')
+    Invoke-DotNet -Arguments @('format', 'whitespace', 'OTPinsert.slnx', '--no-restore', '--verify-no-changes')
     if ($Interactive) {
-        Invoke-DotNet -Arguments @('run', '--project', 'tests/OTPcue.Windows.Tests', '-c', 'Release',
+        Invoke-DotNet -Arguments @('run', '--project', 'tests/OTPinsert.Windows.Tests', '-c', 'Release',
             '--no-build', '--no-restore', '--artifacts-path', $verificationOutput)
     }
 

@@ -1,13 +1,13 @@
 param(
     [Parameter(Mandatory)]
     [string]$PublishDirectory,
-    [string]$AssetsFile = (Join-Path $PSScriptRoot '../src/OTPcue.WinUI/obj/project.assets.json')
+    [string]$AssetsFile = (Join-Path $PSScriptRoot '../src/OTPinsert.WinUI/obj/project.assets.json')
 )
 
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $assets = Get-Content -LiteralPath $AssetsFile -Raw | ConvertFrom-Json
-$deps = Get-Content -LiteralPath (Join-Path $PublishDirectory 'OTPcue.WinUI.deps.json') -Raw | ConvertFrom-Json
+$deps = Get-Content -LiteralPath (Join-Path $PublishDirectory 'OTPinsert.WinUI.deps.json') -Raw | ConvertFrom-Json
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'LICENSE') -Destination (Join-Path $PublishDirectory 'LICENSE.txt')
 
 # Include build/native packages too: WindowsAppSDK imports can copy binaries that
@@ -26,7 +26,7 @@ foreach ($entry in $deps.libraries.PSObject.Properties) {
 $index = [System.Collections.Generic.List[string]]::new()
 $index.Add('# Third-party software notices')
 $index.Add('')
-$index.Add('OTPcue is licensed under the MIT license in LICENSE.txt. The following bundled dependencies retain their own license and notice texts. This list also includes native/build packages used by the self-contained Windows release.')
+$index.Add('OTPinsert is licensed under the MIT license in LICENSE.txt. The following bundled dependencies retain their own license and notice texts. This list also includes native/build packages used by the self-contained Windows release.')
 $index.Add('')
 
 function Convert-LicenseDocumentToText {

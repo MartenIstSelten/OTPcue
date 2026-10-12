@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OTPinsert.Core/OTPinsert.Core.csproj" />
+    <Project Path="src/OTPinsert.Platform/OTPinsert.Platform.csproj" />
+    <Project Path="src/OTPinsert.WinUI/OTPinsert.WinUI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OTPinsert.Core.Tests/OTPinsert.Core.Tests.csproj" />
+    <Project Path="tests/OTPinsert.Google.Tests/OTPinsert.Google.Tests.csproj" />
+    <Project Path="tests/OTPinsert.Updates.Tests/OTPinsert.Updates.Tests.csproj" />
+    <Project Path="tests/OTPinsert.Windows.Tests/OTPinsert.Windows.Tests.csproj" />
+    <Project Path="tests/OTPinsert.WinUI.Tests/OTPinsert.WinUI.Tests.csproj" />
+  </Folder>
+</Solution>

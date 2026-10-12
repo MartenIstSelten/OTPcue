@@ -45,7 +45,7 @@ jobs:
         shell: pwsh
         env:
           RELEASE_VERSION: ${{ steps.release.outputs.version }}
-          REPOSITORY: ${{ github.repository }}
+          REPOSITORY: MartenIstSelten/OTPinsert
           GH_TOKEN: ${{ github.token }}
         run: |
           $ErrorActionPreference = 'Stop'
@@ -56,7 +56,7 @@ jobs:
           $previous = $releases | Where-Object {
             !$_.draft -and !$_.prerelease -and
             ($_.assets.name -contains 'releases.win-x64.json') -and
-            ($_.assets.name -like 'OTPcue-*-win-x64-full.nupkg')
+            ($_.assets.name -like 'OTPinsert-*-win-x64-full.nupkg')
           } | Select-Object -First 1
           $previousDirectory = $null
           if ($previous) {
@@ -69,9 +69,9 @@ jobs:
         shell: pwsh
         env:
           RELEASE_VERSION: ${{ steps.release.outputs.version }}
-          REPOSITORY: ${{ github.repository }}
+          REPOSITORY: MartenIstSelten/OTPinsert
           RELEASE_COMMIT: ${{ github.sha }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          dotnet tool run vpk -- upload github --repoUrl "https://github.com/$env:REPOSITORY" --token $env:GH_TOKEN --channel win-x64 --outputDir "artifacts/releases/$env:RELEASE_VERSION/packages" --publish --releaseName "OTPcue $env:RELEASE_VERSION" --tag "v$env:RELEASE_VERSION" --targetCommitish $env:RELEASE_COMMIT
+          dotnet tool run vpk -- upload github --repoUrl "https://github.com/$env:REPOSITORY" --token $env:GH_TOKEN --channel win-x64 --outputDir "artifacts/releases/$env:RELEASE_VERSION/packages" --publish --releaseName "OTPinsert $env:RELEASE_VERSION" --tag "v$env:RELEASE_VERSION" --targetCommitish $env:RELEASE_COMMIT
           if ($LASTEXITCODE -ne 0) { throw 'Release publication failed.' }
