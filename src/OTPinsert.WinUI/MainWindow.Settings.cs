@@ -6,22 +6,45 @@ namespace OTPinsert.WinUI;
 
 public sealed partial class MainWindow
 {
+    private bool _updatingSettings;
+
+    private void InitializeSettingsAutoSave()
+    {
+        LanguageInput.SelectionChanged += (_, _) => SaveSettings();
+        CountdownInput.ValueChanged += (_, _) => SaveSettings();
+        SoundVolumeInput.ValueChanged += (_, _) => SaveSettings();
+        foreach (var toggle in new[] { RemoveAfterInsertInput, OnlyCodeFieldsInput, AutoCopyCodesInput,
+            PlaySoundOnNewCodeInput, StartWithWindowsInput, StartInTrayInput, CloseToTrayInput })
+        {
+            toggle.Toggled += (_, _) => SaveSettings();
+        }
+    }
+
     private void PopulateSettings(AppSettings settings)
     {
-        LanguageInput.SelectedIndex = settings.Language switch
+        var wasUpdating = _updatingSettings;
+        _updatingSettings = true;
+        try
         {
-            "de" => 1,
-            "en" => 2,
-            _ => 0
-        };
-        CountdownInput.Value = settings.CountdownSeconds;
-        RemoveAfterInsertInput.IsOn = settings.RemoveAfterInsert;
-        OnlyCodeFieldsInput.IsOn = settings.OnlyCodeFields;
-        AutoCopyCodesInput.IsOn = settings.AutoCopyCodes;
-        PopulateSoundSettings(settings);
-        StartWithWindowsInput.IsOn = settings.StartWithWindows;
-        StartInTrayInput.IsOn = settings.StartInTray;
-        CloseToTrayInput.IsOn = settings.CloseToTray;
+            LanguageInput.SelectedIndex = settings.Language switch
+            {
+                "de" => 1,
+                "en" => 2,
+                _ => 0
+            };
+            CountdownInput.Value = settings.CountdownSeconds;
+            RemoveAfterInsertInput.IsOn = settings.RemoveAfterInsert;
+            OnlyCodeFieldsInput.IsOn = settings.OnlyCodeFields;
+            AutoCopyCodesInput.IsOn = settings.AutoCopyCodes;
+            PopulateSoundSettings(settings);
+            StartWithWindowsInput.IsOn = settings.StartWithWindows;
+            StartInTrayInput.IsOn = settings.StartInTray;
+            CloseToTrayInput.IsOn = settings.CloseToTray;
+        }
+        finally
+        {
+            _updatingSettings = wasUpdating;
+        }
     }
     private bool _navigatingSettings;
 
@@ -137,12 +160,18 @@ public sealed partial class MainWindow
     private void ResetSettingsClicked(object sender, RoutedEventArgs e)
     {
         PopulateSettings(new AppSettings());
-        SetSettingsStatus(new(TextId.DefaultsSelectedSaveToApply));
+        SaveSettings();
     }
-    private void SaveSettingsClicked(object sender, RoutedEventArgs e)
+    private void SaveSettings()
     {
+        if (_updatingSettings || _closed || _exiting)
+        {
+            return;
+        }
+
         if (!double.IsFinite(CountdownInput.Value) || CountdownInput.Value < 15 || CountdownInput.Value > 600 || CountdownInput.Value != Math.Truncate(CountdownInput.Value))
         {
+            PopulateSettings(_settings);
             SetSettingsStatus(new(TextId.InvalidCountdown));
             return;
         }
@@ -159,12 +188,23 @@ public sealed partial class MainWindow
             PlaySoundOnNewCode = PlaySoundOnNewCodeInput.IsOn,
             SoundVolumePercent = (int)SoundVolumeInput.Value
         };
+        if (settings == _settings)
+        {
+            SetSettingsStatus(new(TextId.SettingsSaved));
+            return;
+        }
+
+        _updatingSettings = true;
         try
         {
             _settingsService.Save(settings);
+            var languageChanged = settings.Language != _settings.Language;
             _settings = settings;
-            Localization.Configure(settings.Language);
-            ApplyLanguage();
+            if (languageChanged)
+            {
+                Localization.Configure(settings.Language);
+                ApplyLanguage();
+            }
             _store.Countdown = TimeSpan.FromSeconds(settings.CountdownSeconds);
             SetSettingsStatus(new(TextId.SettingsSaved));
             UpdatePopup();
@@ -172,12 +212,18 @@ public sealed partial class MainWindow
         catch (AggregateException exception)
         {
             AppDiagnostics.ReportFailure("Settings.SaveRollback", exception);
+            PopulateSettings(_settings);
             SetSettingsStatus(new(TextId.SettingsRollbackFailed));
         }
         catch (Exception exception)
         {
             AppDiagnostics.ReportFailure("Settings.Save", exception);
+            PopulateSettings(_settings);
             SetSettingsStatus(new(TextId.SettingsSaveFailed));
+        }
+        finally
+        {
+            _updatingSettings = false;
         }
     }
 

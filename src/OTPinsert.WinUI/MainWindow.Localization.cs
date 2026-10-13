@@ -82,7 +82,6 @@ public sealed partial class MainWindow
             TextId.StartInTheNotificationAreaAtWindowsSignIn, TextId.StartInTrayHelp);
         SetSettingText(CloseToTrayInput, CloseToTrayTitle, CloseToTrayHelp,
             TextId.MinimizeToTheNotificationAreaWhenClosing, TextId.CloseToTrayHelp);
-        LocalizedElement8.Content = Localization.Text(TextId.Save);
         LocalizedElement9.Content = Localization.Text(TextId.Defaults);
         GeneralSettingsHeading.Text = Localization.Text(TextId.General);
         CodeSettingsHeading.Text = Localization.Text(TextId.CodesSuggestions);

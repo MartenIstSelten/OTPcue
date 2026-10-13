@@ -135,6 +135,7 @@ public sealed partial class MainWindow : Window
         ApplyLanguage();
         NetworkInformation.NetworkStatusChanged += NetworkStatusChanged;
         UpdateNetworkStatus();
+        InitializeSettingsAutoSave();
     }
 
     private void NetworkStatusChanged(object sender) => OnUi(UpdateNetworkStatus);

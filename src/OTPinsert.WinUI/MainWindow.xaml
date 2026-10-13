@@ -285,7 +285,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="StatusLabel" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FFB3C0CA" />
         <StackPanel x:Name="SettingsFooterButtons" Orientation="Horizontal" Spacing="10" Visibility="Collapsed">
-          <Button Content="Speichern" Click="SaveSettingsClicked" x:Name="LocalizedElement8" />
           <Button Content="Standardwerte" Click="ResetSettingsClicked" x:Name="LocalizedElement9" />
         </StackPanel>
         <Border x:Name="OfflineStatus" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#14F08080" BorderBrush="#30F08080" BorderThickness="1" CornerRadius="8" Padding="10,5">
