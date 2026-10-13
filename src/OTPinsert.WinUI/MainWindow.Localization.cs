@@ -72,6 +72,8 @@ public sealed partial class MainWindow
             TextId.AutoCopyCodes, TextId.AutoCopyCodesHelp);
         SetSettingText(PlaySoundOnNewCodeInput, PlaySoundOnNewCodeTitle, PlaySoundOnNewCodeHelp,
             TextId.PlaySoundOnNewCode, TextId.PlaySoundOnNewCodeHelp);
+        SoundVolumeTitle.Text = Localization.Text(TextId.SoundVolume);
+        AutomationProperties.SetName(SoundVolumeInput, SoundVolumeTitle.Text);
         SetSettingText(OnlyCodeFieldsInput, OnlyCodeFieldsTitle, LocalizedElement7,
             TextId.OnlyCodeFields, TextId.OnlyCodeFieldsSettingsHelp);
         SetSettingText(StartWithWindowsInput, StartWithWindowsTitle, StartWithWindowsHelp,

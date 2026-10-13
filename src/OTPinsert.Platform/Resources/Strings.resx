@@ -642,4 +642,5 @@ Verschlüsselung
   <data name="NoMailFolders" xml:space="preserve"><value>Keine verfügbaren Mailordner gefunden.</value></data>
   <data name="PlaySoundOnNewCode" xml:space="preserve"><value>Ton bei neuem OTP-Code</value></data>
   <data name="PlaySoundOnNewCodeHelp" xml:space="preserve"><value>Spielt einen kurzen Ton ab, sobald ein neuer OTP-Code erkannt wird – auch im Hintergrund.</value></data>
+  <data name="SoundVolume" xml:space="preserve"><value>Tonlautstärke</value></data>
 </root>

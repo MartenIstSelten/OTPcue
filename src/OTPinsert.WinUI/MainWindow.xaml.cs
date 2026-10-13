@@ -36,6 +36,7 @@ public sealed partial class MainWindow : Window
     {
         InitializeComponent();
         InitializeCodeCopy();
+        InitializeSoundPreview();
         _monitor = new AccountMonitor((account, status, stop) => AccountPolling.RunAsync(_store, account, status, stop));
         _settingsService = new SettingsService(_settingsRepository.Save, WindowsStartup.GetCommand,
             WindowsStartup.SetEnabled, WindowsStartup.SetCommand);
@@ -164,7 +165,7 @@ public sealed partial class MainWindow : Window
             {
                 if (!_exiting)
                 {
-                    _codeNotificationSound.Play();
+                    _codeNotificationSound.Play(_settings.SoundVolumePercent);
                 }
             });
         }
@@ -275,7 +276,7 @@ public sealed partial class MainWindow : Window
         _closed = true;
         var failures = await Shutdown.RunAsync(
             [() => NetworkInformation.NetworkStatusChanged -= NetworkStatusChanged,
-                () => _store.CodeAdded -= OnCodeAdded, _copyFeedbackTimer.Stop, _store.Clear, _updateStop.Cancel, _autofill.Stop],
+                () => _store.CodeAdded -= OnCodeAdded, _copyFeedbackTimer.Stop, _soundPreviewTimer.Stop, _store.Clear, _updateStop.Cancel, _autofill.Stop],
             _monitor.StopAllAsync,
             [_codeNotificationSound.Dispose, _tray.Dispose, _trayIcon.Dispose, _autofill.ClosePopup, Close, Application.Current.Exit]);
         foreach (var failure in failures)

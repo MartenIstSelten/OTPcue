@@ -214,4 +214,5 @@ internal enum TextId
     NoMailFolders,
     PlaySoundOnNewCode,
     PlaySoundOnNewCodeHelp,
+    SoundVolume,
 }

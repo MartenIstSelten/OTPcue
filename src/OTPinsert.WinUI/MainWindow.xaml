@@ -192,7 +192,15 @@
                 <TextBlock x:Name="PlaySoundOnNewCodeTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
                 <TextBlock x:Name="PlaySoundOnNewCodeHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
               </StackPanel>
-              <ToggleSwitch x:Name="PlaySoundOnNewCodeInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=PlaySoundOnNewCodeTitle}" />
+              <ToggleSwitch x:Name="PlaySoundOnNewCodeInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" Toggled="SoundSettingToggled" AutomationProperties.LabeledBy="{Binding ElementName=PlaySoundOnNewCodeTitle}" />
+            </Grid>
+            <Grid x:Name="SoundVolumeSettings" ColumnSpacing="24" Padding="0,0,0,8" Visibility="Collapsed">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4">
+                <TextBlock x:Name="SoundVolumeTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <Slider x:Name="SoundVolumeInput" Minimum="0" Maximum="100" Value="100" StepFrequency="1" SmallChange="1" LargeChange="10" ValueChanged="SoundVolumeChanged" AutomationProperties.LabeledBy="{Binding ElementName=SoundVolumeTitle}" />
+              </StackPanel>
+              <TextBlock x:Name="SoundVolumeValue" Grid.Column="1" Text="100 %" MinWidth="48" TextAlignment="Right" VerticalAlignment="Center" />
             </Grid>
             <Border Height="1" Background="#20304550" />
             <Grid ColumnSpacing="24" Padding="0,8">

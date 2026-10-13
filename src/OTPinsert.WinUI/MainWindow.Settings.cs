@@ -18,7 +18,7 @@ public sealed partial class MainWindow
         RemoveAfterInsertInput.IsOn = settings.RemoveAfterInsert;
         OnlyCodeFieldsInput.IsOn = settings.OnlyCodeFields;
         AutoCopyCodesInput.IsOn = settings.AutoCopyCodes;
-        PlaySoundOnNewCodeInput.IsOn = settings.PlaySoundOnNewCode;
+        PopulateSoundSettings(settings);
         StartWithWindowsInput.IsOn = settings.StartWithWindows;
         StartInTrayInput.IsOn = settings.StartInTray;
         CloseToTrayInput.IsOn = settings.CloseToTray;
@@ -80,6 +80,10 @@ public sealed partial class MainWindow
 
     private void SetSettingsScreen(bool show)
     {
+        if (!show)
+        {
+            _soundPreviewTimer.Stop();
+        }
         SettingsScreen.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         AccountsScreen.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
         SettingsFooterButtons.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
@@ -152,7 +156,8 @@ public sealed partial class MainWindow
             })
         {
             AutoCopyCodes = AutoCopyCodesInput.IsOn,
-            PlaySoundOnNewCode = PlaySoundOnNewCodeInput.IsOn
+            PlaySoundOnNewCode = PlaySoundOnNewCodeInput.IsOn,
+            SoundVolumePercent = (int)SoundVolumeInput.Value
         };
         try
         {
