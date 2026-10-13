@@ -85,11 +85,26 @@ public sealed class LifecycleTests
     [Fact]
     public void LanguageChangesPreserveMessageArguments()
     {
-        var message = new LocalizedText(TextId.MailConnected, 3);
-        Localization.Configure("en");
-        Assert.Equal("Connected · New emails are checked every 3 seconds.", message.ToString());
-        Localization.Configure("de");
-        Assert.Equal("Verbunden · Neue E-Mails werden alle 3 Sekunden geprüft.", message.ToString());
+        var originalLanguage = Localization.Language;
+        try
+        {
+            var message = new LocalizedText(TextId.CountdownRemaining, 3);
+            Localization.Configure("en");
+            Assert.Equal("Valid for another 3 seconds", message.ToString());
+            Localization.Configure("de");
+            Assert.Equal("Noch 3 Sekunden gültig", message.ToString());
+        }
+        finally { Localization.Configure(originalLanguage); }
+    }
+
+    [Fact]
+    public void ConnectedStatusesRemainShortInBothLanguages()
+    {
+        foreach (var id in new[] { TextId.MailConnected, TextId.GoogleConnectedOnlyNewINBOXEmailsAreChecked })
+        {
+            Assert.Equal("Connected", Localization.Get(id, CultureInfo.GetCultureInfo("en")));
+            Assert.Equal("Verbunden", Localization.Get(id, CultureInfo.GetCultureInfo("de")));
+        }
     }
 
     [Fact]
