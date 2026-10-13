@@ -215,4 +215,5 @@ internal enum TextId
     PlaySoundOnNewCode,
     PlaySoundOnNewCodeHelp,
     SoundVolume,
+    NewCodeDetected,
 }

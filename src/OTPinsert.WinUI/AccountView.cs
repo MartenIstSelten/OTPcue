@@ -30,7 +30,7 @@ internal sealed class AccountView : INotifyPropertyChanged
     });
     internal void SetStatus(LocalizedText status)
     {
-        _status = status;
+        _status = StatusPresentation.AccountStatus(status);
         Changed(nameof(Status));
         Changed(nameof(StatusForeground));
         Changed(nameof(StatusToolTip));

@@ -35,6 +35,7 @@ public sealed partial class MainWindow : Window
     public MainWindow(bool demo = false)
     {
         InitializeComponent();
+        InitializeStatusFeedback();
         InitializeCodeCopy();
         InitializeSoundPreview();
         _monitor = new AccountMonitor((account, status, stop) => AccountPolling.RunAsync(_store, account, status, stop));
@@ -160,16 +161,21 @@ public sealed partial class MainWindow : Window
     private void OnUi(Action action) => DispatcherQueue.TryEnqueue(() => { if (!_closed) { action(); } });
     private void OnCodeAdded()
     {
-        if (_settings.PlaySoundOnNewCode)
+        OnUi(() =>
         {
-            OnUi(() =>
+            if (_exiting)
             {
-                if (!_exiting)
-                {
-                    _codeNotificationSound.Play(_settings.SoundVolumePercent);
-                }
-            });
-        }
+                return;
+            }
+            if (!_demo)
+            {
+                SetStatus(new(TextId.NewCodeDetected));
+            }
+            if (_settings.PlaySoundOnNewCode)
+            {
+                _codeNotificationSound.Play(_settings.SoundVolumePercent);
+            }
+        });
     }
     private void BeginExit() => _ = ExitAsync();
     internal bool StartInTray => !_firstRun && _settings.StartInTray;
@@ -203,8 +209,7 @@ public sealed partial class MainWindow : Window
         }
         else
         {
-            _statusMessage = null;
-            StatusLabel.Text = "";
+            ClearStatus();
         }
     });
 
@@ -277,7 +282,7 @@ public sealed partial class MainWindow : Window
         _closed = true;
         var failures = await Shutdown.RunAsync(
             [() => NetworkInformation.NetworkStatusChanged -= NetworkStatusChanged,
-                () => _store.CodeAdded -= OnCodeAdded, _copyFeedbackTimer.Stop, _soundPreviewTimer.Stop, _store.Clear, _updateStop.Cancel, _autofill.Stop],
+                () => _store.CodeAdded -= OnCodeAdded, _statusTimer.Stop, _copyFeedbackTimer.Stop, _soundPreviewTimer.Stop, _store.Clear, _updateStop.Cancel, _autofill.Stop],
             _monitor.StopAllAsync,
             [_codeNotificationSound.Dispose, _tray.Dispose, _trayIcon.Dispose, _autofill.ClosePopup, Close, Application.Current.Exit]);
         foreach (var failure in failures)

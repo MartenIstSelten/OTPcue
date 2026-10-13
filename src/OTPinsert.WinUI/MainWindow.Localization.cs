@@ -9,6 +9,19 @@ public sealed partial class MainWindow
 {
     private LocalizedText? _statusMessage;
     private LocalizedText? _settingsMessage;
+    private readonly DispatcherTimer _statusTimer = new() { Interval = TimeSpan.FromSeconds(5) };
+
+    private void InitializeStatusFeedback()
+    {
+        _statusTimer.Tick += (_, _) => ClearStatus();
+    }
+
+    private void ClearStatus()
+    {
+        _statusTimer.Stop();
+        _statusMessage = null;
+        StatusLabel.Text = "";
+    }
     private static void SetSettingText(ToggleSwitch toggle, TextBlock title, TextBlock help, TextId titleId, TextId helpId)
     {
         title.Text = Localization.Text(titleId);
@@ -19,8 +32,13 @@ public sealed partial class MainWindow
 
     private void SetStatus(LocalizedText message)
     {
+        _statusTimer.Stop();
         _statusMessage = message;
         StatusLabel.Text = message.ToString();
+        if (StatusPresentation.IsTransient(message.Id))
+        {
+            _statusTimer.Start();
+        }
     }
     private void SetSettingsStatus(LocalizedText message)
     {

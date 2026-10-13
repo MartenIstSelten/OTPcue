@@ -308,7 +308,7 @@ Encryption
     <value>Google OAuth client ID</value>
   </data>
   <data name="GoogleConnectedOnlyNewINBOXEmailsAreChecked" xml:space="preserve">
-    <value>Connected · New emails are checked every {0} seconds.</value>
+    <value>Connected</value>
   </data>
   <data name="GoogleSignInSuccessfulGmailIsReadableSaveNow" xml:space="preserve">
     <value>Google sign-in successful. Gmail is readable. Save now.</value>
@@ -536,7 +536,7 @@ Encryption
     <value>Email content could not be processed ({0}); message skipped.</value>
   </data>
   <data name="MailConnected" xml:space="preserve">
-    <value>Connected · New emails are checked every {0} seconds.</value>
+    <value>Connected</value>
   </data>
   <data name="CountdownRemaining" xml:space="preserve">
     <value>Valid for another {0} seconds</value>
@@ -643,4 +643,7 @@ Encryption
   <data name="PlaySoundOnNewCode" xml:space="preserve"><value>Sound for new OTP codes</value></data>
   <data name="PlaySoundOnNewCodeHelp" xml:space="preserve"><value>Plays a short chime whenever a new OTP code is detected, including in the background.</value></data>
   <data name="SoundVolume" xml:space="preserve"><value>Sound volume</value></data>
+  <data name="NewCodeDetected" xml:space="preserve">
+    <value>New code detected</value>
+  </data>
 </root>
