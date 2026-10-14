@@ -54,8 +54,8 @@ internal sealed class AcrylicPopupWindow : Window
             _acrylic.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
             _acrylic.SetSystemBackdropConfiguration(_backdropConfiguration);
             _acrylic.TintColor = Windows.UI.Color.FromArgb(255, 21, 34, 47);
-            _acrylic.TintOpacity = 0.20f;
-            _acrylic.LuminosityOpacity = 0.20f;
+            _acrylic.TintOpacity = 0.30f;
+            _acrylic.LuminosityOpacity = 0.30f;
             _acrylic.FallbackColor = Windows.UI.Color.FromArgb(255, 26, 37, 51);
         }
 

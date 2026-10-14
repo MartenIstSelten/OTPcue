@@ -26,7 +26,7 @@ internal sealed class PopupCard : UserControl
         VerticalAlignment = VerticalAlignment.Center
     };
     private bool _hovered;
-    private readonly SolidColorBrush _cardBackground = new(Color.FromArgb(32, 21, 34, 47));
+    private readonly SolidColorBrush _cardBackground = new(Color.FromArgb(80, 21, 34, 47));
 
     public void SetCode(OTPinsert.Core.Otp code)
     {
@@ -74,9 +74,11 @@ internal sealed class PopupCard : UserControl
         var card = new Border
         {
             Margin = new Thickness(0),
-            Padding = new Thickness(14, 5, 14, 5),
-            CornerRadius = new CornerRadius(13),
-            BorderThickness = new Thickness(0),
+            Padding = new Thickness(13, 4, 13, 4),
+            // Match the native rounded window so its acrylic does not peek out behind the card.
+            CornerRadius = new CornerRadius(8),
+            BorderThickness = new Thickness(1),
+            BorderBrush = new SolidColorBrush(Color.FromArgb(36, 160, 177, 188)),
             Background = _cardBackground,
             Child = BuildContent()
         };
@@ -111,8 +113,8 @@ internal sealed class PopupCard : UserControl
     {
         _hovered = hovered;
         _cardBackground.Color = hovered
-            ? Color.FromArgb(40, 52, 69, 80)
-            : Color.FromArgb(32, 21, 34, 47);
+            ? Color.FromArgb(88, 52, 69, 80)
+            : Color.FromArgb(80, 21, 34, 47);
         VisualStateManager.GoToState(_insertButton, hovered ? "PointerOver" : "Normal", true);
     }
 
