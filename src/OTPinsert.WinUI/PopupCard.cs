@@ -1,5 +1,6 @@
 using OTPinsert.Platform;
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -69,6 +70,7 @@ internal sealed class PopupCard : UserControl
     private Button? _dismissButton;
     public PopupCard()
     {
+        ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
         var card = new Border
         {
             Margin = new Thickness(0),
