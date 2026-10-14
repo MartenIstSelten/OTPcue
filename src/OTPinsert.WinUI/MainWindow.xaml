@@ -198,9 +198,9 @@
               <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
               <StackPanel Spacing="4">
                 <TextBlock x:Name="SoundVolumeTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
-                <Slider x:Name="SoundVolumeInput" Minimum="0" Maximum="100" Value="100" StepFrequency="1" SmallChange="1" LargeChange="10" ValueChanged="SoundVolumeChanged" AutomationProperties.LabeledBy="{Binding ElementName=SoundVolumeTitle}" />
+                <Slider x:Name="SoundVolumeInput" Minimum="0" Maximum="100" Value="35" StepFrequency="1" SmallChange="1" LargeChange="10" ValueChanged="SoundVolumeChanged" AutomationProperties.LabeledBy="{Binding ElementName=SoundVolumeTitle}" />
               </StackPanel>
-              <TextBlock x:Name="SoundVolumeValue" Grid.Column="1" Text="100 %" MinWidth="48" TextAlignment="Right" VerticalAlignment="Center" />
+              <TextBlock x:Name="SoundVolumeValue" Grid.Column="1" Text="35 %" MinWidth="48" TextAlignment="Right" VerticalAlignment="Center" />
             </Grid>
             <Border Height="1" Background="#20304550" />
             <Grid ColumnSpacing="24" Padding="0,8">

@@ -5,7 +5,7 @@ namespace OTPinsert.Platform;
 internal sealed record AppSettings(int CountdownSeconds = 60, bool RemoveAfterInsert = true, bool OnlyCodeFields = false, bool StartWithWindows = true, bool StartInTray = true, bool CloseToTray = true, string Language = "system")
 {
     public bool PlaySoundOnNewCode { get; init; } = true;
-    public int SoundVolumePercent { get; init; } = 100;
+    public int SoundVolumePercent { get; init; } = 35;
 
     public bool AutoCopyCodes
     {
