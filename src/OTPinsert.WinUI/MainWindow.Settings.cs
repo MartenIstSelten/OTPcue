@@ -18,6 +18,14 @@ public sealed partial class MainWindow
         {
             toggle.Toggled += (_, _) => SaveSettings();
         }
+        ShowOtpSuggestionsInput.Toggled += (_, _) => UpdateOtpSuggestionSettingsVisibility();
+    }
+
+    private void UpdateOtpSuggestionSettingsVisibility()
+    {
+        OnlyCodeFieldsSettings.Visibility = ShowOtpSuggestionsInput.IsOn
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private void PopulateSettings(AppSettings settings)
@@ -36,6 +44,7 @@ public sealed partial class MainWindow
             RemoveAfterInsertInput.IsOn = settings.RemoveAfterInsert;
             OnlyCodeFieldsInput.IsOn = settings.OnlyCodeFields;
             ShowOtpSuggestionsInput.IsOn = settings.ShowOtpSuggestions;
+            UpdateOtpSuggestionSettingsVisibility();
             AutoCopyCodesInput.IsOn = settings.AutoCopyCodes;
             PopulateSoundSettings(settings);
             StartWithWindowsInput.IsOn = settings.StartWithWindows;
