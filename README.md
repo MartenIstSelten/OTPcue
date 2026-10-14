@@ -1,36 +1,41 @@
-# OTPinsert - Autofill OTP codes on Windows
+# OTPinsert — Fill verification codes on Windows
 
-macOS autofills your verification codes from Mail. Windows leaves you copying and pasting. **OTPinsert brings that convenience to Windows.**
+OTPinsert brings email verification codes to the app or browser where you need them. Connect your inbox, request a code, and click the suggestion next to the input field to fill it in.
 
-Connect your inbox, receive a code, and click the suggestion to fill it in—right in your app or browser. Codes are processed locally, with no browser extension required.
+Your emails are processed on your computer, and you don't need a browser extension.
 
 ## Features
 
-- **Click to fill:** New codes appear as suggestions next to almost every input field in browsers and Windows apps. Click a suggestion to fill in the code.
-- **Folder selection:** Choose the IMAP folder or Gmail label to monitor.
-- **Auto copy:** Optionally copy new codes to your clipboard automatically, ready to paste wherever you need them.
-- **Local processing:** Emails are processed on your computer, with no telemetry or email content logging.
-- **Encrypted credentials:** Passwords and OAuth tokens are protected with Windows DPAPI and stored for your Windows user account.
-- **Email connections:** Connect through IMAP using a password or app password, or use Google OAuth for Gmail. Multiple accounts are supported.
-- **Demo mode:** Try autofill without connecting an email account.
+- **Fill codes with a click.** Click a suggestion next to a supported input field in your browser or Windows app to insert the code.
+- **Choose what to monitor.** Select the IMAP folder or Gmail label where your verification emails arrive.
+- **Copy codes automatically.** Turn on automatic copying if you prefer to paste codes yourself.
+- **Keep processing local.** OTPinsert processes emails on your computer, with no telemetry or email content logging.
+- **Protect your credentials.** Passwords and OAuth tokens are encrypted with Windows DPAPI for your Windows user account.
+- **Connect multiple accounts.** Use IMAP with a password or app password, or connect Gmail through Google OAuth. See the Gmail sign-in notes below for current restrictions.
+- **Try it first.** Demo mode lets you test autofill without connecting an email account.
 
 ## Installation
 
-For Windows 10 and 11 (x64).
+OTPinsert runs on Windows 10 and 11 (x64).
 
 1. Download `OTPinsert-win-x64.exe` from [Releases](https://github.com/MartenIstSelten/OTPinsert/releases) once a release is available.
-2. Run the installer and start OTPinsert. Required runtimes are included.
-3. Add an account, verify the connection, and save it. Request a new verification email, then click the suggestion next to the input field.
+2. Run the installer and open OTPinsert. The required runtimes are included.
+3. Add your email account, verify the connection, and save it.
+4. Request a new verification email, click the code field in your app or browser, and click the OTPinsert suggestion to fill it in.
 
-To try the app, start demo mode and click a text field in another app. Click the suggestion to insert the demo code.
+Want to try it before connecting your inbox? Start demo mode, click a text field in another app, then click the suggestion to insert a sample code.
 
-## Notes
+## Things to know
 
-The app processes new messages in the selected folder without modifying them. Existing messages are ignored when monitoring starts or the folder changes. It detects numeric codes containing 4–8 digits. Some input fields are unsupported, including codes split across multiple individual boxes.
+OTPinsert watches for new messages in your selected folder and leaves them unchanged. It ignores messages that are already there when monitoring starts or when you switch folders.
+
+It detects numeric codes containing 4–8 digits.
+
+### Gmail and iCloud sign-in
 
 Gmail and iCloud can be connected using app passwords.
 
-Google OAuth is currently in testing mode; Google verification is pending. Sign-in is available only to explicitly approved Google test accounts. In testing mode, authorization expires after seven days, requiring another Google sign-in in OTPinsert. Alternatively, connect Gmail with an app password if your Google account supports it.
+Google OAuth is currently in testing mode while Google verification is pending. Only approved Google test accounts can sign in this way. Authorization expires after seven days in testing mode, so you'll need to sign in again in OTPinsert. You can also connect Gmail with an app password if your Google account supports it.
 
 ## Development and contributions
 
