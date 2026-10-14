@@ -646,4 +646,6 @@ Encryption
   <data name="NewCodeDetected" xml:space="preserve">
     <value>New code detected</value>
   </data>
+  <data name="ShowOtpSuggestions" xml:space="preserve"><value>Show OTP suggestions at text fields</value></data>
+  <data name="ShowOtpSuggestionsHelp" xml:space="preserve"><value>Displays a suggestion for inserting the current code next to the focused text field.</value></data>
 </root>

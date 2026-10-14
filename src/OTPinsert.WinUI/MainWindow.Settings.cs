@@ -13,7 +13,7 @@ public sealed partial class MainWindow
         LanguageInput.SelectionChanged += (_, _) => SaveSettings();
         CountdownInput.ValueChanged += (_, _) => SaveSettings();
         SoundVolumeInput.ValueChanged += (_, _) => SaveSettings();
-        foreach (var toggle in new[] { RemoveAfterInsertInput, OnlyCodeFieldsInput, AutoCopyCodesInput,
+        foreach (var toggle in new[] { RemoveAfterInsertInput, OnlyCodeFieldsInput, ShowOtpSuggestionsInput, AutoCopyCodesInput,
             PlaySoundOnNewCodeInput, StartWithWindowsInput, StartInTrayInput, CloseToTrayInput })
         {
             toggle.Toggled += (_, _) => SaveSettings();
@@ -35,6 +35,7 @@ public sealed partial class MainWindow
             CountdownInput.Value = settings.CountdownSeconds;
             RemoveAfterInsertInput.IsOn = settings.RemoveAfterInsert;
             OnlyCodeFieldsInput.IsOn = settings.OnlyCodeFields;
+            ShowOtpSuggestionsInput.IsOn = settings.ShowOtpSuggestions;
             AutoCopyCodesInput.IsOn = settings.AutoCopyCodes;
             PopulateSoundSettings(settings);
             StartWithWindowsInput.IsOn = settings.StartWithWindows;
@@ -185,6 +186,7 @@ public sealed partial class MainWindow
             })
         {
             AutoCopyCodes = AutoCopyCodesInput.IsOn,
+            ShowOtpSuggestions = ShowOtpSuggestionsInput.IsOn,
             PlaySoundOnNewCode = PlaySoundOnNewCodeInput.IsOn,
             SoundVolumePercent = (int)SoundVolumeInput.Value
         };

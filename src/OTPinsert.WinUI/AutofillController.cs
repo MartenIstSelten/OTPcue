@@ -94,7 +94,7 @@ internal sealed class AutofillController
             blocked = false;
         }
         render(code);
-        if (suspended() || IsPaused || blocked || IsFilling || target is null || code is null
+        if (!settings().ShowOtpSuggestions || suspended() || IsPaused || blocked || IsFilling || target is null || code is null
             || (settings().OnlyCodeFields && !OtpDetector.IsCodeLabel(target.Label))
             || Native.GetForegroundWindow() != target.Foreground)
         {

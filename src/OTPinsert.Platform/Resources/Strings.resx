@@ -646,4 +646,6 @@ Verschlüsselung
   <data name="NewCodeDetected" xml:space="preserve">
     <value>Neuer Code erkannt</value>
   </data>
+  <data name="ShowOtpSuggestions" xml:space="preserve"><value>OTP-Vorschläge an Textfeldern anzeigen</value></data>
+  <data name="ShowOtpSuggestionsHelp" xml:space="preserve"><value>Zeigt neben dem fokussierten Textfeld einen Vorschlag zum Einfügen des aktuellen Codes an.</value></data>
 </root>

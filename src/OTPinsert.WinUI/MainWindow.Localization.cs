@@ -94,6 +94,8 @@ public sealed partial class MainWindow
         AutomationProperties.SetName(SoundVolumeInput, SoundVolumeTitle.Text);
         SetSettingText(OnlyCodeFieldsInput, OnlyCodeFieldsTitle, LocalizedElement7,
             TextId.OnlyCodeFields, TextId.OnlyCodeFieldsSettingsHelp);
+        SetSettingText(ShowOtpSuggestionsInput, ShowOtpSuggestionsTitle, ShowOtpSuggestionsHelp,
+            TextId.ShowOtpSuggestions, TextId.ShowOtpSuggestionsHelp);
         SetSettingText(StartWithWindowsInput, StartWithWindowsTitle, StartWithWindowsHelp,
             TextId.StartWithWindows, TextId.StartWithWindowsHelp);
         SetSettingText(StartInTrayInput, StartInTrayTitle, StartInTrayHelp,

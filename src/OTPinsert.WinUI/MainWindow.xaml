@@ -206,6 +206,14 @@
             <Grid ColumnSpacing="24" Padding="0,8">
               <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
               <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock x:Name="ShowOtpSuggestionsTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock x:Name="ShowOtpSuggestionsHelp" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
+              </StackPanel>
+              <ToggleSwitch x:Name="ShowOtpSuggestionsInput" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center" AutomationProperties.LabeledBy="{Binding ElementName=ShowOtpSuggestionsTitle}" />
+            </Grid>
+            <Grid ColumnSpacing="24" Padding="0,8">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+              <StackPanel Spacing="4" VerticalAlignment="Center">
                 <TextBlock x:Name="OnlyCodeFieldsTitle" FontWeight="SemiBold" TextWrapping="Wrap" />
                 <TextBlock x:Name="LocalizedElement7" FontSize="12" Foreground="#FFB3C0CA" TextWrapping="Wrap" />
               </StackPanel>

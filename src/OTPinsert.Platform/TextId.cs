@@ -202,6 +202,8 @@ internal enum TextId
     AutoCopyCodesHelp,
     RemoveAfterInsertHelp,
     OnlyCodeFieldsSettingsHelp,
+    ShowOtpSuggestions,
+    ShowOtpSuggestionsHelp,
     StartWithWindowsHelp,
     StartInTrayHelp,
     CloseToTrayHelp,
