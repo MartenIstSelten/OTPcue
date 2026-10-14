@@ -253,7 +253,7 @@ public sealed partial class MainWindow : Window
     private void RenderCode(Otp? code)
     {
         UpdateUpdateUi();
-        CodeLabel.Text = code is null ? Localization.Text(TextId.NoCodeYet) : code.Code;
+        CodeLabel.Text = code is null ? Localization.Text(TextId.NoCodeYet) : string.Join(" ", code.Code.Chunk(3).Select(group => new string(group)));
         var noAccounts = !_demo && _storageReady && _accounts.Count == 0;
         NoCodePlaceholder.Text = Localization.Text(noAccounts ? TextId.AddAnAccountToStart : TextId.NoCodeYet);
         UpdateCodeCopy(code);
