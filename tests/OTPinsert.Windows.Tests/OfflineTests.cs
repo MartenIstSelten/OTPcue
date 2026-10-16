@@ -78,6 +78,64 @@ public sealed class MailProcessingTests
     }
 
     [Fact]
+    public void ExtractsVisuallySeparatedCodeFromMultipartEmail()
+    {
+        // Synthetic version of a mail whose plain-text alternative joins paragraphs.
+        using var original = new MimeMessage
+        {
+            Subject = "Einmaliger Code für den Zugriff auf dein Konto.",
+            Body = new Multipart("alternative")
+            {
+                new TextPart("plain")
+                {
+                    Text = "Hej,bitte gib den Einmalcode ein, den du angefordert hast.123456Dieser Einmalcode ist nur 5 Minuten gültig.",
+                    ContentTransferEncoding = ContentEncoding.QuotedPrintable
+                },
+                new TextPart("html")
+                {
+                    Text = "<p>Hej, bitte gib den Einmalcode ein, den du angefordert hast.</p>" +
+                        "<p style=\"font-size: 48px;\"><b>123456</b></p>" +
+                        "<p>Dieser Einmalcode ist nur 5 Minuten gültig.</p>",
+                    ContentTransferEncoding = ContentEncoding.QuotedPrintable
+                }
+            }
+        };
+        using var stream = new System.IO.MemoryStream();
+        original.WriteTo(stream);
+        stream.Position = 0;
+        using var message = MimeMessage.Load(stream);
+
+        Assert.Null(OtpDetector.Extract(message.Subject!, message.TextBody!));
+        Assert.Equal("123456", MailContent.ExtractCode(message));
+    }
+
+    [Theory]
+    [InlineData("", "<p>Verification code: <strong>123456</strong></p>", "123456")]
+    [InlineData("See the formatted message.", "<p>Verification code: <b>123456</b></p>", "123456")]
+    [InlineData("Verification code: 123456", "<p>Verification code: 654321</p>", "123456")]
+    [InlineData("Verification code: A123456B", "<p>Verification code: A123456B</p>", null)]
+    [InlineData("Verification code: 123456 or 654321", "<p>Verification code: <b>123456</b> or <b>654321</b></p>", null)]
+    [InlineData("", "<p>Invoice: <b>123456</b></p>", null)]
+    [InlineData("", "<p>Verification code</p><!-- <b>123456</b> -->", null)]
+    public void HtmlFallbackPreservesCodeValidation(string plain, string html, string? expected)
+    {
+        using var original = new MimeMessage
+        {
+            Body = new Multipart("alternative")
+            {
+                new TextPart("plain") { Text = plain },
+                new TextPart("html") { Text = html }
+            }
+        };
+        using var stream = new System.IO.MemoryStream();
+        original.WriteTo(stream);
+        stream.Position = 0;
+        using var message = MimeMessage.Load(stream);
+
+        Assert.Equal(expected, MailContent.ExtractCode(message));
+    }
+
+    [Fact]
     public void HtmlCommentsCannotSupplyCodeCandidates()
     {
         using var message = new MimeMessage

@@ -35,19 +35,29 @@ internal static class MailContent
 
     internal static string? ExtractCode(MimeMessage message)
     {
-        var body = message.TextBody;
-        if (body is null)
+        var subject = message.Subject ?? "";
+        var plain = message.TextBody;
+        var code = plain is null ? null : OtpDetector.Extract(subject, plain);
+        if (code is not null)
         {
-            var html = message.HtmlBody ?? "";
-            html = html[..Math.Min(html.Length, MaximumBodyLength)];
-            // Linear matching avoids backtracking on unmatched HTML delimiters.
-            html = HtmlComments.Replace(html, " ");
-            body = HtmlTags.Replace(html, " ");
-            // HTML indentation is visual whitespace, not distance from the code label.
-            // Normalize only HTML; plain-text proximity checks retain their meaning.
-            body = HtmlWhitespace.Replace(System.Net.WebUtility.HtmlDecode(body), " ");
+            return code;
         }
 
-        return OtpDetector.Extract(message.Subject ?? "", body);
+        // Alternative plain-text parts can lose the separators around a visually
+        // distinct HTML code. Try HTML when plain text has no unambiguous result.
+        var html = message.HtmlBody;
+        if (html is null)
+        {
+            return null;
+        }
+
+        html = html[..Math.Min(html.Length, MaximumBodyLength)];
+        // Linear matching avoids backtracking on unmatched HTML delimiters.
+        html = HtmlComments.Replace(html, " ");
+        var body = HtmlTags.Replace(html, " ");
+        // HTML indentation is visual whitespace, not distance from the code label.
+        // Normalize only HTML; plain-text proximity checks retain their meaning.
+        body = HtmlWhitespace.Replace(System.Net.WebUtility.HtmlDecode(body), " ");
+        return OtpDetector.Extract(subject, body);
     }
 }
