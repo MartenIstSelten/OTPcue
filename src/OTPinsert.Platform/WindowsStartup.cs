@@ -40,7 +40,7 @@ internal static class WindowsStartup
             var locator = Velopack.Locators.VelopackLocator.Current;
             if (locator.CurrentlyInstalledVersion is not null && locator.UpdateExePath is { } updater)
             {
-                return $"\"{updater}\" start \"OTPinsert.WinUI.exe\" -- {LaunchBehavior.AutostartArgument}";
+                return $"\"{updater}\" start \"OTPinsert.exe\" -- {LaunchBehavior.AutostartArgument}";
             }
         }
         var executable = Environment.ProcessPath ?? throw new InvalidOperationException("Programmpfad konnte nicht ermittelt werden.");

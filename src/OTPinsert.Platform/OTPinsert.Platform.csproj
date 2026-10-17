@@ -11,7 +11,7 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.77.0" />
     <PackageReference Include="MailKit" Version="4.17.0" />
     <PackageReference Include="Velopack" Version="1.2.161" />
-    <InternalsVisibleTo Include="OTPinsert.WinUI" />
+    <InternalsVisibleTo Include="OTPinsert" />
     <InternalsVisibleTo Include="OTPinsert.Google.Tests" />
     <InternalsVisibleTo Include="OTPinsert.Windows.Tests" />
     <InternalsVisibleTo Include="OTPinsert.WinUI.Tests" />

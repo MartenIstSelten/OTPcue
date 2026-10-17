@@ -18,7 +18,7 @@ Your emails are processed on your computer, and you don't need a browser extensi
 
 OTPinsert runs on Windows 10 and 11 (x64).
 
-1. Download `OTPinsert-win-x64.exe` from [Releases](https://github.com/MartenIstSelten/OTPinsert/releases).
+1. Download `OTPinsert.exe` from [Releases](https://github.com/MartenIstSelten/OTPinsert/releases).
 2. Run the installer and open OTPinsert. The required runtimes are included.
 3. Add your email account, verify the connection, and save it.
 4. Request a new verification email, click the code field in your app or browser, and click the OTPinsert suggestion to fill it in.

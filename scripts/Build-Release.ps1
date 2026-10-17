@@ -37,8 +37,8 @@ try {
         "-p:Version=$Version", "-p:UpdateRepositoryUrl=$UpdateRepositoryUrl",
         '-p:WindowsAppSDKSelfContained=true', '-p:PublishSingleFile=false', '-p:PublishTrimmed=false')
     # WinUI cannot initialize App.xaml without the application's compiled resources.
-    if (!(Test-Path -LiteralPath (Join-Path $publishDirectory 'OTPinsert.WinUI.pri'))) {
-        throw 'Published WinUI resources are missing: OTPinsert.WinUI.pri. Refusing to package an app that cannot start.'
+    if (!(Test-Path -LiteralPath (Join-Path $publishDirectory 'OTPinsert.pri'))) {
+        throw 'Published WinUI resources are missing: OTPinsert.pri. Refusing to package an app that cannot start.'
     }
     & (Join-Path $PSScriptRoot 'Copy-ReleaseLicenses.ps1') -PublishDirectory $publishDirectory
     if (Get-ChildItem -LiteralPath $publishDirectory -Recurse -File -Filter '*.update-token.dat') {
@@ -47,7 +47,7 @@ try {
     Invoke-DotNet -Arguments @('tool', 'run', 'vpk', '--', 'pack',
         '--packId', 'OTPinsert', '--packTitle', 'OTPinsert',
         '--packAuthors', 'MartenIstSelten', '--packVersion', $Version,
-        '--packDir', $publishDirectory, '--mainExe', 'OTPinsert.WinUI.exe',
+        '--packDir', $publishDirectory, '--mainExe', 'OTPinsert.exe',
         '--icon', (Join-Path $publishDirectory 'Assets/OTPinsert.ico'),
         '--channel', 'win-x64', '--runtime', 'win-x64', '--outputDir', $packageDirectory)
     # Verify that the installer/update payload includes the WinUI resource index
@@ -59,7 +59,7 @@ try {
             throw 'Local update credentials found in update package. Refusing release publication.'
         }
         foreach ($file in @(
-            (Get-Item -LiteralPath (Join-Path $publishDirectory 'OTPinsert.WinUI.pri')),
+            (Get-Item -LiteralPath (Join-Path $publishDirectory 'OTPinsert.pri')),
             (Get-Item -LiteralPath (Join-Path $publishDirectory 'Assets/OTPinsert.ico')),
             (Get-Item -LiteralPath (Join-Path $publishDirectory 'LICENSE.txt')),
             (Get-Item -LiteralPath (Join-Path $publishDirectory 'THIRD-PARTY-NOTICES.md'))
@@ -70,12 +70,12 @@ try {
     }
     finally { $archive.Dispose() }
     # Keep the update identity stable while publishing a shorter installer name.
-    Move-Item -LiteralPath (Join-Path $packageDirectory 'OTPinsert-win-x64-Setup.exe') -Destination (Join-Path $packageDirectory 'OTPinsert-win-x64.exe')
+    Move-Item -LiteralPath (Join-Path $packageDirectory 'OTPinsert-win-x64-Setup.exe') -Destination (Join-Path $packageDirectory 'OTPinsert.exe')
     $assetManifest = Join-Path $packageDirectory 'assets.win-x64.json'
     $assets = @(Get-Content -LiteralPath $assetManifest -Raw | ConvertFrom-Json)
     foreach ($asset in $assets) {
         if ($asset.RelativeFileName -eq 'OTPinsert-win-x64-Setup.exe') {
-            $asset.RelativeFileName = 'OTPinsert-win-x64.exe'
+            $asset.RelativeFileName = 'OTPinsert.exe'
         }
     }
     ConvertTo-Json -InputObject $assets -Depth 10 | Set-Content -LiteralPath $assetManifest -Encoding utf8

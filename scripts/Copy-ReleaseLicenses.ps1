@@ -7,7 +7,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $assets = Get-Content -LiteralPath $AssetsFile -Raw | ConvertFrom-Json
-$deps = Get-Content -LiteralPath (Join-Path $PublishDirectory 'OTPinsert.WinUI.deps.json') -Raw | ConvertFrom-Json
+$deps = Get-Content -LiteralPath (Join-Path $PublishDirectory 'OTPinsert.deps.json') -Raw | ConvertFrom-Json
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'LICENSE') -Destination (Join-Path $PublishDirectory 'LICENSE.txt')
 
 # Include build/native packages too: WindowsAppSDK imports can copy binaries that
